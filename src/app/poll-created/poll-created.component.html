@@ -1,0 +1,23 @@
+<div class="container">
+  <div *ngIf="pollId; else noId">
+    <h1>Anketa byla úspěšně vytvořena</h1>
+
+    <p>
+      Vaše anketa byla úspěšně uložena.<br>
+      Odkaz na anketu: 
+    <a [href]="appUrl + '/fill-poll/' + pollId" target="_blank">
+  {{ appUrl }}/fill-poll/{{ pollId }}
+</a>
+    </p>
+
+    <p class="highlight-orange">
+      Děkujeme, že jste vytvořili anketu.  
+      Sdílejte odkaz se svými respondenty a sledujte výsledky.
+    </p>
+  </div>
+
+  <ng-template #noId>
+    <h1>Odkaz na anketu není dostupný</h1>
+    <p>ID ankety nebylo vráceno. Prosím zkuste vytvořit anketu znovu.</p>
+  </ng-template>
+</div>

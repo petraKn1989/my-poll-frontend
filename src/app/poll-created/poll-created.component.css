@@ -1,0 +1,39 @@
+.container {
+  max-width: 700px;
+  margin: 50px auto;
+  background: white;
+  padding: 40px 30px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+
+h1 {
+  text-align: center;
+  color: #0077cc;
+  margin-bottom: 30px;
+  font-size: 28px;
+}
+
+p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+a.poll-link {
+  color: #fd7e14;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+a.poll-link:hover {
+  text-decoration: underline;
+}
+
+.highlight-orange {
+  color: #fd7e14;
+  font-weight: bold;
+}

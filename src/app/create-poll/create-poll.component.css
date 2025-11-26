@@ -1,0 +1,159 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f7f7f7;
+}
+
+.container {
+    max-width: 900px;
+    margin: auto;
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+}
+
+h1 {
+    text-align: center;
+    color: #0077cc;
+    margin-bottom: 30px;
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    margin-top: 15px;
+}
+
+input[type=text] {
+    width: 100%;
+    padding: 8px;
+    margin-top: 6px;
+    box-sizing: border-box;
+}
+
+.question-card {
+    background: #eef5ff;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+    border: 1px solid #c8dfff;
+}
+
+.option-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 8px;
+    align-items: center;
+}
+
+.option-row input {
+    flex: 1;
+}
+
+/* decentní šedé X */
+.remove-btn {
+    background: #ccc;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    color: #333;
+    border: none;
+}
+
+.remove-btn:hover {
+    background: #b5b5b5;
+}
+
+/* modré tlačítko Přidat možnost */
+.add-option-btn {
+    margin-top: 10px;
+    background: #0066cc;
+    padding: 8px 14px;
+    border-radius: 6px;
+    display: inline-block;
+    cursor: pointer;
+    color: white;
+    font-size: 14px;
+    border: none;
+}
+
+.add-option-btn:hover {
+    background: #0052a3;
+}
+
+/* tlačítko Přidat otázku */
+.add-question-btn {
+    margin: 20px 0;
+    background: #0077cc22;
+    color: #005fa3;
+    padding: 10px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 16px;
+    border: 1px solid #0077cc55;
+    display: inline-block;
+}
+
+.add-question-btn:hover {
+    background: #dceeff;
+    border-color: #0077cc;
+}
+
+/* velké oranžové tlačítko vytvořit anketu */
+.submit-btn {
+    background: #fd7e14;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    padding: 16px 40px;
+    border-radius: 8px;
+    margin: 30px auto 0;
+    display: block;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.submit-btn:hover {
+    background: #e36e0a;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+/* odstranit otázku */
+.remove-question-btn {
+    margin-top: 10px;
+    background: #ccc;
+    color: #333;
+    padding: 8px 14px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+}
+
+.remove-question-btn:hover {
+    background: #bcbcbc;
+}
+
+.question-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.remove-question-btn.small {
+    background: #ffdddd;
+    color: #a33;
+    padding: 4px 10px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.remove-question-btn.small:hover {
+    background: #ffcccc;
+}
+

@@ -1,0 +1,25 @@
+<div class="container">
+  <h1>Vytvořit anketu</h1>
+
+  <div class="question-card" *ngFor="let q of questions; let qi = index; trackBy: trackByIndex">
+    <label>Otázka {{ qi + 1 }}:</label>
+    <input type="text" [(ngModel)]="q.text" placeholder="Zadejte text otázky" required />
+
+    <h3>Možnosti:</h3>
+    <div class="option-row" *ngFor="let opt of q.options; let oi = index; trackBy: trackByIndex">
+      <input type="text" [(ngModel)]="q.options[oi]" placeholder="Možnost odpovědi" required />
+      <button class="remove-btn" (click)="removeOption(qi, oi)">×</button>
+    </div>
+
+    <button class="add-option-btn" (click)="addOption(qi)">+ Přidat možnost</button>
+
+    <label class="multi-answer">
+      <input type="checkbox" [(ngModel)]="q.allowMultiple" /> Povolit více odpovědí
+    </label>
+
+    <button class="remove-question-btn" (click)="removeQuestion(qi)">Odstranit otázku</button>
+  </div>
+
+  <button class="add-question-btn" (click)="addQuestion()">+ Přidat otázku</button>
+  <button class="submit-btn" (click)="createPoll()">Vytvořit anketu</button>
+</div>

@@ -1,0 +1,61 @@
+<div class="container" *ngIf="pollData && pollData.questions.length > 0; else loading">
+  <h1>Dotazník</h1>
+
+  <form (ngSubmit)="submitSurvey()" #surveyForm="ngForm">
+
+    <div class="question-block" *ngFor="let q of pollData.questions; let i=index">
+      <div class="question-card">
+        <p class="question-text">{{ i + 1 }}. {{ q.text }}</p>
+
+        <div *ngIf="!q.allowMultiple">
+          <div class="option-block" *ngFor="let opt of q.options">
+            <label>
+              <input 
+                type="radio"
+                name="question_{{ q.id }}"
+                [(ngModel)]="q.selectedOptionId"
+                [value]="opt.id"
+                required
+              >
+              {{ opt.text }}
+            </label>
+            <span class="option-votes">{{ opt.votes }} hlasů</span>
+          </div>
+        </div>
+
+        <div *ngIf="q.allowMultiple">
+          <div class="option-block" *ngFor="let opt of q.options">
+            <label>
+              <input 
+                type="checkbox"
+                [(ngModel)]="q.selectedOptions[opt.id]"
+                name="question_{{ q.id }}_{{ opt.id }}"
+              >
+              {{ opt.text }}
+            </label>
+            <span class="option-votes">{{ opt.votes }} hlasů</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="total-votes" *ngIf="pollData.totalVotes !== undefined">
+      Celkem odesláno hlasování: {{ pollData.totalVotes }}
+    </div>
+
+   <button type="submit" class="submit-btn" [disabled]="isSubmitting">
+  {{ isSubmitting ? 'Odesílám...' : 'Odeslat' }}
+</button>
+
+  </form>
+
+  <div class="info-text">
+    Sdílejte tento dotazník se svými respondenty.
+    <span class="highlight-orange">Děkujeme za vyplnění!</span>
+  </div>
+</div>
+
+<ng-template #loading>
+  <p>Načítám dotazník…</p>
+</ng-template>
