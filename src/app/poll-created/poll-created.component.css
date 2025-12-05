@@ -37,3 +37,14 @@ a.poll-link:hover {
   color: #fd7e14;
   font-weight: bold;
 }
+
+.copy-link {
+  background: none;
+  border: none;
+  color: #ff9800;
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: inherit;
+  padding: 0;
+}
+

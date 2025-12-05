@@ -1,0 +1,19 @@
+<div class="results-container" *ngIf="!isLoading && pollData; else loading">
+  <h1>Výsledky ankety</h1>
+
+  <div *ngFor="let q of pollData.questions; let i=index" class="question-block">
+    <p class="question-text">{{ i + 1 }}. {{ q.text }}</p>
+
+    <ul class="options-list">
+      <li *ngFor="let opt of q.options">
+        {{ opt.text }} – {{ opt.votes ?? 0 }} hlasů ({{ getPercentage(opt.votes ?? 0) }})
+      </li>
+    </ul>
+  </div>
+
+  <p class="total-votes">Celkem hlasů: {{ pollData.totalVotes ?? 0 }}</p>
+</div>
+
+<ng-template #loading>
+  <p>Načítám výsledky…</p>
+</ng-template>

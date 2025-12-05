@@ -5,8 +5,9 @@
 
     <div class="question-block" *ngFor="let q of pollData.questions; let i=index">
       <div class="question-card">
-        <p class="question-text">{{ i + 1 }}. {{ q.text }}</p>
+        <p class="question-text">{{ i + 1 }}. {{ q.text || 'Otázka bez textu' }}</p>
 
+        <!-- Jedna odpověď -->
         <div *ngIf="!q.allowMultiple">
           <div class="option-block" *ngFor="let opt of q.options">
             <label>
@@ -15,14 +16,14 @@
                 name="question_{{ q.id }}"
                 [(ngModel)]="q.selectedOptionId"
                 [value]="opt.id"
-                required
               >
               {{ opt.text }}
             </label>
-            <span class="option-votes">{{ opt.votes }} hlasů</span>
+            <span class="option-votes" *ngIf="opt.votes !== undefined">{{ opt.votes }} hlasů</span>
           </div>
         </div>
 
+        <!-- Více odpovědí -->
         <div *ngIf="q.allowMultiple">
           <div class="option-block" *ngFor="let opt of q.options">
             <label>
@@ -33,10 +34,9 @@
               >
               {{ opt.text }}
             </label>
-            <span class="option-votes">{{ opt.votes }} hlasů</span>
+            <span class="option-votes" *ngIf="opt.votes !== undefined">{{ opt.votes }} hlasů</span>
           </div>
         </div>
-
       </div>
     </div>
 
@@ -44,9 +44,10 @@
       Celkem odesláno hlasování: {{ pollData.totalVotes }}
     </div>
 
-   <button type="submit" class="submit-btn" [disabled]="isSubmitting">
-  {{ isSubmitting ? 'Odesílám...' : 'Odeslat' }}
-</button>
+    <button type="submit" class="submit-btn" [disabled]="isSubmitting">
+      <span *ngIf="isSubmitting" class="spinner"></span>
+      {{ isSubmitting ? 'Odesílám...' : 'Odeslat' }}
+    </button>
 
   </form>
 

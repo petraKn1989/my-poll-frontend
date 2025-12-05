@@ -1,11 +1,25 @@
 <div class="container">
-  <h1>Vytvořit anketu</h1>
+  <h1>Vytvořit anketu zdarma</h1>
+
+  <!-- Viditelný SEO text -->
+  <section class="seo-content">
+    <h2>Online anketa a dotazník</h2>
+    <p>
+      Vytvořte si vlastní online anketu zdarma, rychlý dotazník, průzkum nebo hlasovací formulář.
+      Sdílejte online dotazník se studenty, kolegy či přáteli a sbírejte názory rychle a pohodlně.
+      Ideální pro online hlasování, krátké ankety, interaktivní dotazníky a firemní průzkumy.
+    </p>
+    <p>
+      Vyplnění je snadné a výsledky jsou ihned k dispozici.
+      Bezplatná anketa online, vlastní interaktivní dotazník, průzkum názorů a hodnocení.
+    </p>
+  </section>
 
   <div class="question-card" *ngFor="let q of questions; let qi = index; trackBy: trackByIndex">
     <label>Otázka {{ qi + 1 }}:</label>
     <input type="text" [(ngModel)]="q.text" placeholder="Zadejte text otázky" required />
 
-    <h3>Možnosti:</h3>
+    <h3>Možnosti odpovědí</h3>
     <div class="option-row" *ngFor="let opt of q.options; let oi = index; trackBy: trackByIndex">
       <input type="text" [(ngModel)]="q.options[oi]" placeholder="Možnost odpovědi" required />
       <button class="remove-btn" (click)="removeOption(qi, oi)">×</button>

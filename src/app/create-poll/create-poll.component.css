@@ -157,3 +157,35 @@ input[type=text] {
     background: #ffcccc;
 }
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
+}
+
+/* Viditelný SEO obsah - nenarušuje layout */
+.seo-content {
+  font-size: 0.9rem;       /* trochu menší text než hlavní obsah */
+  line-height: 1.5;
+  color: #555;             /* decentní barva textu */
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.seo-content h2 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.seo-content p {
+  margin-bottom: 0.8rem;
+}
+
+
+

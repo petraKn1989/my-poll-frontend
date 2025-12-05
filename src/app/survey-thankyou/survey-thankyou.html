@@ -1,11 +1,16 @@
 <div class="thankyou-container">
   <div class="thankyou-card">
+    <p class="thankyou-icon">✔</p>
     <p class="thankyou-text">
-      ✔ Děkujeme za vyplnění dotazníku! Vaše odpovědi byly úspěšně odeslány.
+      Děkujeme za vyplnění dotazníku! Vaše odpovědi byly úspěšně odeslány.
     </p>
-    <button class="home-btn" routerLink="/">Zpět na domovskou stránku</button>
+
+    <div class="button-group">
+      <button class="create-poll-btn" (click)="goToCreatePoll()">Vytvořit novou anketu</button>
+    </div>
+
     <p class="share-note">
-      Pokud chcete, můžete sdílet tuto anketu s přáteli nebo kolegy.
+      Pokud chcete, můžete si ihned vytvořit další anketu.
     </p>
   </div>
 </div>

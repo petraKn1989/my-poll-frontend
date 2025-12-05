@@ -1,17 +1,29 @@
 <div class="container">
-  <div *ngIf="pollId; else noId">
+  <div *ngIf="pollId != null; else noId">
     <h1>Anketa byla úspěšně vytvořena</h1>
 
     <p>
       Vaše anketa byla úspěšně uložena.<br>
       Odkaz na anketu: 
-    <a [href]="appUrl + '/fill-poll/' + pollId" target="_blank">
-  {{ appUrl }}/fill-poll/{{ pollId }}
-</a>
+      <a [href]="getPollLink()" target="_blank">{{ getPollLink() }}</a>
     </p>
 
+    <div class="button-group">
+      <!-- Tlačítko pro kopírování odkazu -->
+      <div class="button-block">
+        <button class="copy-link" (click)="copyPollLink()">Kopírovat odkaz</button>
+        <small>Kliknutím zkopírujete odkaz na anketu do schránky</small>
+      </div>
+
+      <!-- Tlačítko pro zobrazení výsledků -->
+      <div class="button-block">
+        <button class="results-btn" (click)="goToResults()">Zobrazit výsledky ankety</button>
+        <small>Zobrazí přehled hlasování – jen pro autora ankety</small>
+      </div>
+    </div>
+
     <p class="highlight-orange">
-      Děkujeme, že jste vytvořili anketu.  
+      Děkujeme, že jste vytvořili anketu.<br>
       Sdílejte odkaz se svými respondenty a sledujte výsledky.
     </p>
   </div>

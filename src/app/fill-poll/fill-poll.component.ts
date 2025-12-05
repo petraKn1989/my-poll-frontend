@@ -47,28 +47,27 @@ export class FillPollComponent implements OnInit {
     });
   }
 
-  submitSurvey() {
-    if (this.surveyForm.invalid || this.isSubmitting) {
-      return; // neodesílat, pokud je formulář neplatný nebo už se odesílá
+ submitSurvey() {
+  if (this.isSubmitting) return; // prevence dvojího odeslání
+
+  this.isSubmitting = true;
+
+  const resultPayload: AnswerRequest = this.transformFormToResult();
+
+  console.log("ODESÍLANÉ ODPOVĚDI (JSON):", resultPayload);
+
+  this.pollService.sendAnswers(resultPayload).subscribe({
+    next: (res) => {
+      console.log("Odpovědi uloženy", res);
+      this.router.navigate(['/survey-thank-you']);
+    },
+    error: (err) => {
+      console.error("Chyba při ukládání", err);
+      this.isSubmitting = false;
+      alert('Odeslání se nezdařilo. Zkuste to prosím znovu.');
     }
-
-    this.isSubmitting = true; // deaktivujeme tlačítko
-
-    const resultPayload: AnswerRequest = this.transformFormToResult();
-
-    console.log("ODESÍLANÉ ODPOVĚDI (finální JSON):", resultPayload);
-
-    this.pollService.sendAnswers(resultPayload).subscribe({
-      next: (res) => {
-        console.log("Odpovědi uloženy", res);
-        this.router.navigate(['/survey-thank-you']);
-      },
-      error: (err) => {
-        console.error("Chyba při ukládání", err);
-        this.isSubmitting = false; // znovu povolíme tlačítko při chybě
-      }
-    });
-  }
+  });
+}
 
   // Pomocná funkce – převede Angular form na JSON vhodný pro backend
   private transformFormToResult(): AnswerRequest {
