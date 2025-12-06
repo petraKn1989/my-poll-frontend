@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router } from "@angular/router";
 import { PollStoreService } from "../services/poll-store";
 import { PollService } from "../services/pollServices";
-import { CreatePollDto, Poll } from "../../model/Poll";
+import { CreatePollDto } from "../../model/Poll";
 import { SeoService } from '../services/seo.service';
 
 @Component({
@@ -15,9 +15,12 @@ import { SeoService } from '../services/seo.service';
   styleUrls: ['./create-poll.component.css']
 })
 export class CreatePollComponent implements OnInit {
+
   questions = [
     { text: '', allowMultiple: false, options: ['', ''] }
   ];
+
+  errorMessage: string = '';
 
   constructor(
     private pollService: PollService,
@@ -27,50 +30,46 @@ export class CreatePollComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // ✅ Nastavení SEO základních meta tagů
     this.seo.setPage(
       'Vytvořit anketu zdarma | Online dotazník',
       'Vytvořte si vlastní anketu, dotazník nebo průzkum online zdarma. Sdílejte s přáteli, kolegy nebo studenty.',
-      undefined // necháme SEO službu vybrat 15 klíčových slov z poolu
+      undefined
     );
+    this.addJsonLdSchema();
+    this.updateSocialMeta();
+  }
 
-    // ✅ JSON-LD schema.org pro WebPage / Survey
+  private addJsonLdSchema() {
     const script = document.createElement('script');
     script.type = 'application/ld+json';
     script.text = JSON.stringify({
       "@context": "https://schema.org",
       "@type": "WebPage",
       "name": "Vytvořit anketu zdarma",
-      "description": "Vytvořte si vlastní online dotazník zdarma a sledujte výsledky hlasování online.",
+      "description": "Vytvořte si vlastní online dotazník zdarma.",
       "url": window.location.href
     });
     document.head.appendChild(script);
-
-    // ✅ Open Graph & Twitter meta tagy
-    this.updateSocialMeta();
   }
 
   private updateSocialMeta() {
     const url = window.location.href;
     const title = 'Vytvořit anketu zdarma | Online dotazník';
-    const description = 'Vytvořte si vlastní anketu, dotazník nebo průzkum online zdarma. Sdílejte s přáteli, kolegy nebo studenty.';
+    const description = 'Vytvořte si vlastní anketu nebo průzkum online zdarma.';
     const image = 'https://www.example.com/assets/preview-image.png';
 
-    // Open Graph
     this.seo['metaService'].updateTag({ property: 'og:title', content: title });
     this.seo['metaService'].updateTag({ property: 'og:description', content: description });
     this.seo['metaService'].updateTag({ property: 'og:type', content: 'website' });
     this.seo['metaService'].updateTag({ property: 'og:url', content: url });
     this.seo['metaService'].updateTag({ property: 'og:image', content: image });
 
-    // Twitter Card
     this.seo['metaService'].updateTag({ name: 'twitter:card', content: 'summary_large_image' });
     this.seo['metaService'].updateTag({ name: 'twitter:title', content: title });
     this.seo['metaService'].updateTag({ name: 'twitter:description', content: description });
     this.seo['metaService'].updateTag({ name: 'twitter:image', content: image });
   }
 
-  // ================== Funkce pro formulář ankety ==================
   addQuestion() {
     this.questions.push({ text: '', allowMultiple: false, options: ['', ''] });
   }
@@ -91,13 +90,32 @@ export class CreatePollComponent implements OnInit {
     return index;
   }
 
+  isFirstQuestionValid(): boolean {
+    const firstQ = this.questions[0];
+    if (!firstQ) return false;
+
+    const textFilled: boolean = !!firstQ.text && firstQ.text.trim() !== '';
+    const optionsFilled: boolean =
+      firstQ.options.filter(opt => opt && opt.trim() !== '').length >= 2;
+
+    return textFilled && optionsFilled;
+  }
+
   createPoll() {
+    if (!this.isFirstQuestionValid()) {
+      this.errorMessage =
+        "První otázka musí být vyplněná a obsahovat alespoň 2 možnosti.";
+      return;
+    }
+
+    this.errorMessage = '';
+
     const payload: CreatePollDto = {
       createdAt: new Date().toISOString(),
       questions: this.questions.map(q => ({
         text: q.text,
         allowMultiple: q.allowMultiple,
-        options: q.options // string[] pro backend
+        options: q.options
       }))
     };
 
@@ -106,7 +124,8 @@ export class CreatePollComponent implements OnInit {
         if (resp.id) this.pollStore.setPollId(resp.id);
         this.router.navigate(['/poll-created'], { replaceUrl: true });
       },
-      error: (_) => alert("Došlo k chybě při vytváření ankety.")
+      error: (_) =>
+        alert("Došlo k chybě při vytváření ankety.")
     });
   }
 }
