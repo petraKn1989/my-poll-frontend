@@ -17,28 +17,36 @@ export class PollCreatedComponent implements OnInit {
 
   constructor(private pollStore: PollStoreService, private router: Router) {}
 
-
   ngOnInit(): void {
     this.pollId = this.pollStore.getPollId(); // načteme ID z služby
   }
 
+  // Vrátí bezpečný odkaz na vyplnění ankety
   getPollLink(): string {
-  return `${this.appUrl.replace(/\/+$/, '')}/fill-poll/${this.pollId}`;
+    if (!this.pollId) return '#';
+    return `${this.appUrl.replace(/\/+$/, '')}/fill-poll/${this.pollId}`;
+  }
+
+  // Navigace na výsledky ankety – jen při kliknutí uživatele
+  getResultsLink(): string {
+  if (!this.pollId) return '#';
+  return `${this.appUrl.replace(/\/+$/, '')}/poll-results/${this.pollId}`;
 }
 
-goToResults() {
-  this.router.navigate(['/poll-results', this.pollId]);
-}
-
+  // Kopírování odkazu do schránky
   copyPollLink() {
-  const link = `${this.appUrl}/fill-poll/${this.pollId}`;
-  navigator.clipboard.writeText(link)
-    .then(() => {
-      alert('Odkaz byl zkopírován do schránky!');
-    })
-    .catch(err => {
-      console.error('Chyba při kopírování odkazu:', err);
-    });
-}
+    const link = this.getPollLink();
+    if (!link || link === '#') {
+      alert('Odkaz není dostupný');
+      return;
+    }
 
+    navigator.clipboard.writeText(link)
+      .then(() => {
+        alert('Odkaz byl zkopírován do schránky!');
+      })
+      .catch(err => {
+        console.error('Chyba při kopírování odkazu:', err);
+      });
+  }
 }

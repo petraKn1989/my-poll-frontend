@@ -33,11 +33,16 @@
   <button class="add-question-btn" (click)="addQuestion()">+ Přidat otázku</button>
 
   <!-- Odeslání ankety -->
-  <button class="submit-btn" (click)="createPoll()">
+  <button class="submit-btn" (click)="createPoll()" [disabled]="isSubmitting">
     Vytvořit anketu
   </button>
 
-  <!-- ❗Zde se zobrazí hláška až po kliknutí -->
+  <!-- Info hláška při odesílání -->
+  <div *ngIf="infoMessage" class="info-message">
+    {{ infoMessage }}
+  </div>
+
+  <!-- Chyba -->
   <div *ngIf="errorMessage" class="error-message">
     {{ errorMessage }}
   </div>

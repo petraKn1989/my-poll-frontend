@@ -21,6 +21,8 @@ export class CreatePollComponent implements OnInit {
   ];
 
   errorMessage: string = '';
+  infoMessage: string = '';
+  isSubmitting: boolean = false;
 
   constructor(
     private pollService: PollService,
@@ -30,11 +32,15 @@ export class CreatePollComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    // -----------------------------
+    // SEO a JSON-LD
+    // -----------------------------
     this.seo.setPage(
       'Vytvořit anketu zdarma | Online dotazník',
       'Vytvořte si vlastní anketu, dotazník nebo průzkum online zdarma. Sdílejte s přáteli, kolegy nebo studenty.',
-      undefined
+      this.seo['keywordPool'] // všechna klíčová slova
     );
+
     this.addJsonLdSchema();
     this.updateSocialMeta();
   }
@@ -46,8 +52,13 @@ export class CreatePollComponent implements OnInit {
       "@context": "https://schema.org",
       "@type": "WebPage",
       "name": "Vytvořit anketu zdarma",
-      "description": "Vytvořte si vlastní online dotazník zdarma.",
-      "url": window.location.href
+      "description": "Vytvořte si vlastní online dotazník zdarma. Klíčová slova: " + this.seo['keywordPool'].join(', '),
+      "url": window.location.href,
+      "mainEntity": {
+        "@type": "Survey",
+        "name": "Vytvořit anketu zdarma",
+        "description": "Vytvořte si vlastní online dotazník zdarma. Klíčová slova: " + this.seo['keywordPool'].join(', ')
+      }
     });
     document.head.appendChild(script);
   }
@@ -55,21 +66,26 @@ export class CreatePollComponent implements OnInit {
   private updateSocialMeta() {
     const url = window.location.href;
     const title = 'Vytvořit anketu zdarma | Online dotazník';
-    const description = 'Vytvořte si vlastní anketu nebo průzkum online zdarma.';
+    const description = 'Vytvořte si vlastní anketu nebo průzkum online zdarma. Klíčová slova: ' + this.seo['keywordPool'].join(', ');
     const image = 'https://www.example.com/assets/preview-image.png';
 
+    // Open Graph
     this.seo['metaService'].updateTag({ property: 'og:title', content: title });
     this.seo['metaService'].updateTag({ property: 'og:description', content: description });
     this.seo['metaService'].updateTag({ property: 'og:type', content: 'website' });
     this.seo['metaService'].updateTag({ property: 'og:url', content: url });
     this.seo['metaService'].updateTag({ property: 'og:image', content: image });
 
+    // Twitter Card
     this.seo['metaService'].updateTag({ name: 'twitter:card', content: 'summary_large_image' });
     this.seo['metaService'].updateTag({ name: 'twitter:title', content: title });
     this.seo['metaService'].updateTag({ name: 'twitter:description', content: description });
     this.seo['metaService'].updateTag({ name: 'twitter:image', content: image });
   }
 
+  // -----------------------------
+  // Správa otázek a možností
+  // -----------------------------
   addQuestion() {
     this.questions.push({ text: '', allowMultiple: false, options: ['', ''] });
   }
@@ -90,7 +106,7 @@ export class CreatePollComponent implements OnInit {
     return index;
   }
 
-  isFirstQuestionValid(): boolean {
+  private isFirstQuestionValid(): boolean {
     const firstQ = this.questions[0];
     if (!firstQ) return false;
 
@@ -101,7 +117,12 @@ export class CreatePollComponent implements OnInit {
     return textFilled && optionsFilled;
   }
 
+  // -----------------------------
+  // Odeslání ankety
+  // -----------------------------
   createPoll() {
+    if (this.isSubmitting) return;
+
     if (!this.isFirstQuestionValid()) {
       this.errorMessage =
         "První otázka musí být vyplněná a obsahovat alespoň 2 možnosti.";
@@ -109,6 +130,8 @@ export class CreatePollComponent implements OnInit {
     }
 
     this.errorMessage = '';
+    this.infoMessage = 'Čekejte prosím, data se odesílají…';
+    this.isSubmitting = true;
 
     const payload: CreatePollDto = {
       createdAt: new Date().toISOString(),
@@ -121,11 +144,17 @@ export class CreatePollComponent implements OnInit {
 
     this.pollService.submitSurvey(payload).subscribe({
       next: (resp) => {
+        this.isSubmitting = false;
+        this.infoMessage = '';
         if (resp.id) this.pollStore.setPollId(resp.id);
         this.router.navigate(['/poll-created'], { replaceUrl: true });
       },
-      error: (_) =>
-        alert("Došlo k chybě při vytváření ankety.")
+      error: (_) => {
+        this.isSubmitting = false;
+        this.infoMessage = '';
+        alert("Došlo k chybě při vytváření ankety.");
+      }
     });
   }
+
 }

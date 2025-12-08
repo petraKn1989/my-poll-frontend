@@ -1,50 +1,88 @@
-.container {
-  max-width: 700px;
-  margin: 50px auto;
-  background: white;
-  padding: 40px 30px;
-  border-radius: 12px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-  font-family: Arial, sans-serif;
-  color: #333;
-}
-
-h1 {
+/* Bílý rámeček */
+.success-card {
+  background: #fff;
+  padding: 35px 30px;
+  border-radius: 14px;
+  border: 1px solid #a0c4ff;
+  margin: 20px auto; /* střed */
+  max-width: 800px; /* omezení šířky */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
   text-align: center;
+}
+
+/* Modrý rámeček kolem odkazů */
+.links-frame {
+  background-color: #eef5ff;
+  border-radius: 12px;
+  padding: 20px 25px;
+  margin: 25px auto; /* střed */
+  max-width: 700px; /* omezení šířky, aby nebylo přes celou obrazovku */
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Řádek s odkazem */
+.poll-link-row,
+.results-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* Zarovnání textu vlevo a odkazu vyplní zbytek řádku */
+.poll-link-row span,
+.results-row span {
+  font-weight: bold;
+  font-size: 18px;
+  min-width: 150px;
+  text-align: left;
+}
+
+.poll-link-row a,
+.results-row a {
   color: #0077cc;
-  margin-bottom: 30px;
-  font-size: 28px;
-}
-
-p {
-  font-size: 16px;
-  line-height: 1.6;
-  color: #555;
-  margin-bottom: 20px;
-}
-
-a.poll-link {
-  color: #fd7e14;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-a.poll-link:hover {
   text-decoration: underline;
-}
-
-.highlight-orange {
-  color: #fd7e14;
-  font-weight: bold;
+  font-weight: 600;
+  font-size: 18px;
+ 
 }
 
 .copy-link {
-  background: none;
+  background: #0077cc;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 6px;
   border: none;
-  color: #ff9800;
+  font-size: 15px;
   cursor: pointer;
-  text-decoration: underline;
-  font-size: inherit;
-  padding: 0;
+  transition: 0.2s;
 }
 
+.copy-link:hover {
+  background: #005fa3;
+}
+
+/* Responsivní úprava */
+@media (max-width: 480px) {
+  .poll-link-row, .results-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .poll-link-row span, .results-row span {
+    min-width: auto;
+  }
+
+  .poll-link-row a, .results-row a, .copy-link {
+    width: 100%;
+  }
+}
+.highlight-orange {
+  color: #d97300;       /* oranžová */
+  font-weight: bold;
+  font-size: 20px;      /* zvětšený text */
+  margin-top: 25px;
+  text-align: center;   /* aby byl uprostřed */
+}
