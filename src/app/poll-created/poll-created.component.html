@@ -4,27 +4,32 @@
     Sdílejte ji se svými respondenty a začněte sbírat odpovědi.
   </p>
 
-  <!-- Modrý rámeček -->
+  <!-- Oranžový rámeček s odkazy -->
   <div class="links-frame">
-    <div class="poll-link-row">
-      <span>Odkaz na anketu:</span>
+    <!-- Odkaz na anketu -->
+    <div class="poll-link-block">
+      <span class="block-title">Pro odkaz na hlasování:</span>
+      <p class="link-text">Zde je odkaz na anketu:</p>
       <a [href]="getPollLink()" target="_blank">{{ getPollLink() }}</a>
-      <button class="copy-link" (click)="copyPollLink()">Kopírovat odkaz</button>
+      <button class="copy-link" (click)="copyLink(getPollLink())">Kopírovat odkaz</button>
     </div>
 
-    <div class="results-row">
-      <span>Výsledky ankety:</span>
-      <a [href]="getResultsLink()" target="_blank" *ngIf="pollId">
-        {{ getResultsLink() }}
-      </a>
-      <span *ngIf="!pollId">Výsledky nejsou dostupné</span>
+    <!-- Odstup -->
+    <div class="spacer"></div>
+
+    <!-- Výsledky ankety -->
+    <div class="poll-link-block">
+      <span class="block-title">Pro odkaz na administraci / výsledky:</span>
+      <p class="link-text">Zde je odkaz pro sledování výsledků a správu ankety:</p>
+      <a [href]="getResultsLink()" target="_blank">{{ getResultsLink() }}</a>
+      <button class="copy-link" (click)="copyLink(getResultsLink())">Kopírovat odkaz</button>
+  
     </div>
   </div>
 
-  <hr class="divider" />
-
-  <p class="highlight-orange">
+  <!-- Oranžový text dole -->
+  <p class="warming-info">
     Děkujeme, že jste vytvořili anketu.<br>
- 
+    Nezapomeňte si uložit odkazy, protože zatím nefunguje automatické zasílání emailem!
   </p>
 </div>

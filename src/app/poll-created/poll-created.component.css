@@ -1,88 +1,98 @@
-/* Bílý rámeček */
+/* Hlavní karta */
 .success-card {
   background: #fff;
-  padding: 35px 30px;
-  border-radius: 14px;
+  padding: 40px 35px;
+  border-radius: 16px;
   border: 1px solid #a0c4ff;
-  margin: 20px auto; /* střed */
-  max-width: 800px; /* omezení šířky */
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  text-align: center;
+  margin: 30px auto;
+  max-width: 900px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+  text-align: left; /* zarovnáno vlevo */
+  font-size: 18px;  /* větší text všude */
+  line-height: 1.6;
 }
 
-/* Modrý rámeček kolem odkazů */
+/* Nadpis */
+.success-card h1 {
+  font-size: 28px;  /* větší nadpis */
+  margin-bottom: 20px;
+}
+
+/* Podnadpis */
+.success-text {
+  font-size: 20px;
+  margin-bottom: 25px;
+}
+
+/* Oranžový rámeček kolem odkazů */
 .links-frame {
-  background-color: #eef5ff;
-  border-radius: 12px;
-  padding: 20px 25px;
-  margin: 25px auto; /* střed */
-  max-width: 700px; /* omezení šířky, aby nebylo přes celou obrazovku */
+  background-color: #eef5ff;; /* jemně oranžový podklad */
+  border: 2px solid #c8dfff; /* oranžový rámeček */
+  border-radius: 14px;        /* hezky zaoblené rohy */
+  padding: 25px 30px;
+  margin-bottom: 25px;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 20px;
 }
 
-/* Řádek s odkazem */
-.poll-link-row,
-.results-row {
+/* Každý blok odkazu */
+.poll-link-block {
   display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 8px;
 }
 
-/* Zarovnání textu vlevo a odkazu vyplní zbytek řádku */
-.poll-link-row span,
-.results-row span {
+/* Nadpis bloku */
+.block-title {
   font-weight: bold;
-  font-size: 18px;
-  min-width: 150px;
-  text-align: left;
+  font-size: 20px;
+  color: #000;
 }
 
-.poll-link-row a,
-.results-row a {
+/* Text odkazu */
+.link-text {
+  color: #000;
+  font-size: 18px;
+  margin: 0;
+}
+
+/* Odkaz samotný */
+.poll-link-block a {
   color: #0077cc;
   text-decoration: underline;
   font-weight: 600;
   font-size: 18px;
- 
+  word-break: break-all; /* aby se dlouhý odkaz nerozbil */
 }
 
+/* Tlačítko kopírovat */
 .copy-link {
   background: #0077cc;
   color: white;
   padding: 8px 16px;
   border-radius: 6px;
   border: none;
-  font-size: 15px;
   cursor: pointer;
-  transition: 0.2s;
+  width: fit-content;
+  font-size: 16px;
+  margin-top: 5px;
 }
 
 .copy-link:hover {
   background: #005fa3;
 }
 
-/* Responsivní úprava */
-@media (max-width: 480px) {
-  .poll-link-row, .results-row {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .poll-link-row span, .results-row span {
-    min-width: auto;
-  }
-
-  .poll-link-row a, .results-row a, .copy-link {
-    width: 100%;
-  }
+/* Odstup mezi bloky */
+.spacer {
+  height: 25px;
 }
-.highlight-orange {
-  color: #d97300;       /* oranžová */
+
+/* Oranžový text dole */
+.warming-info {
+  color: red;
   font-weight: bold;
-  font-size: 20px;      /* zvětšený text */
-  margin-top: 25px;
-  text-align: center;   /* aby byl uprostřed */
+  font-size: 20px;
+  margin-top: 20px;
+  line-height: 1.5;
 }

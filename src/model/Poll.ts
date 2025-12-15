@@ -20,6 +20,8 @@ export interface Poll {
   createdAt: string;        // datum vytvoření (string z backendu)
   questions: Question[];    // pole otázek
   totalVotes?: number;       // celkový počet hlasů ve všech otázkách
+  slug: string;
+  status: string;
 }
 
 // Pro odesílání odpovědí uživatele
@@ -41,6 +43,8 @@ export interface CreateQuestionDto {
 
 export interface CreatePollDto {
   createdAt: string;
+  showResults: boolean,
+  title: string 
   questions: CreateQuestionDto[];
 }
 

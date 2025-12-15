@@ -1,7 +1,9 @@
-<div class="results-container" *ngIf="!isLoading && pollData; else loading">
+<div class="results-container">
+
   <h1>Výsledky ankety</h1>
 
-  <div *ngFor="let q of pollData.questions; let i=index" class="question-block">
+
+  <div *ngFor="let q of pollData.questions; let i = index" class="question-block">
     <p class="question-text">{{ i + 1 }}. {{ q.text }}</p>
 
     <ul class="options-list">
@@ -9,11 +11,21 @@
         {{ opt.text }} – {{ opt.votes ?? 0 }} hlasů ({{ getPercentage(opt.votes ?? 0) }})
       </li>
     </ul>
+    <p style="font-size: 20px; color: darkgreen"><b>Hlasovalo celkem: {{ pollData.totalVotes }}</b> </p>
+  </div>
+  
+
+  <div class="poll-actions">
+    <!-- Tlačítko se zobrazí jen pokud anketa není smazaná -->
+
+    <!-- Po smazání se zobrazí jen text -->
+    <p *ngIf="isDeleted" class="deleted-info">Tato anketa byla smazána.</p>
   </div>
 
-  <p class="total-votes">Celkem hlasů: {{ pollData.totalVotes ?? 0 }}</p>
+  <!-- Zde vložíte komponentu s tabulkou akcí -->
+  <app-survey-actions
+    [pollId]="pollData.id!" 
+    [pollStatus]="pollData.status"
+    (statusChanged)="onStatusChanged($event)"
+  ></app-survey-actions>
 </div>
-
-<ng-template #loading>
-  <p>Načítám výsledky…</p>
-</ng-template>

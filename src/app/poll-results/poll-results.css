@@ -1,38 +1,121 @@
+/* Hlavní kontejner výsledků */
 .results-container {
-  max-width: 700px;
+  max-width: 750px;
   margin: 40px auto;
-  padding: 25px 30px;
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  padding: 30px;
+  background: #f7f9fc;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-h1 {
+/* Nadpis výsledků */
+.results-container h1 {
   text-align: center;
-  margin-bottom: 25px;
+  color: #0077cc; /* modrá barva */
+  margin-bottom: 35px;
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
 }
 
+/* Jednotlivé otázky */
 .question-block {
+  background: #ffffff;
+  padding: 25px;              /* větší padding */
   margin-bottom: 20px;
+  border-left: 6px solid #ff9800; /* oranžový pruh vlevo */
+  border-radius: 12px;        /* kulaté rohy */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
 
+/* Text otázky */
 .question-text {
-  font-weight: bold;
-  margin-bottom: 10px;
+  font-weight: 600;
+  font-size: 22px;            /* zvětšeno z 18px */
+  margin-bottom: 15px;
+  color: #333;
 }
 
+/* Seznam možností */
 .options-list {
   list-style: none;
-  padding-left: 0;
+  padding: 0;
+  margin: 0;
 }
 
+/* Jednotlivé možnosti */
 .options-list li {
-  margin-bottom: 5px;
+  display: flex;
+  justify-content: space-between; /* text vlevo, hlasy vpravo */
+  align-items: center;
+  margin-bottom: 12px;
+  font-size: 20px;             /* větší a čitelný text */
+  line-height: 1.5;
+  color: #2a3f54;
 }
 
+/* Název volby */
+.option-name {
+  flex: 1;
+  font-size: 20px;             /* text volby */
+  color: #555;
+}
+
+/* Počet hlasů / procenta */
+.option-count {
+  width: 70px;                 /* dostatek místa pro čísla */
+  text-align: right;
+  font-weight: 600;
+  color: #2a3f54;
+}
+
+/* Celkem hlasů */
 .total-votes {
   font-weight: bold;
-  margin-top: 25px;
   text-align: right;
-  color: #555;
+  margin-top: 20px;
+  color: #444;
+  font-size: 18px;
+}
+
+/* Akce nad nebo pod anketou */
+.poll-actions {
+  text-align: center;
+  margin-top: 30px;
+}
+
+/* Tlačítko smazat */
+.delete-btn {
+  background-color: #ff4d4f;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.delete-btn:hover {
+  background-color: #d9363e;
+}
+
+/* Responzivita */
+@media (max-width: 480px) {
+  .results-container {
+    padding: 20px;
+  }
+
+  .question-text {
+    font-size: 20px;
+  }
+
+  .options-list li {
+    font-size: 18px;
+  }
+
+  .option-name {
+    font-size: 18px;
+  }
 }

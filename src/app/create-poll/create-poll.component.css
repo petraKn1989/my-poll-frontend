@@ -1,9 +1,27 @@
+/* Základní nastavení */
+html {
+  font-size: 16px; /* 1rem = 16px */
+}
+
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.5;
+  color: #000;
+}
+
+/* Název ankety – oranžový */
+.name-poll {
+  color: #ff9800;
+  font-weight: 600;
+  font-size: 1.25rem; /* 20px */
+}
+
 /* Karta otázky */
 .question-card {
   background: #eef5ff;
-  padding: 25px;
+  padding: 1.5rem; /* 24px */
   border-radius: 12px;
-  margin-top: 20px;
+  margin-top: 1.25rem; /* 20px */
   border: 1px solid #c8dfff;
 }
 
@@ -11,81 +29,110 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 12px;
+  margin-bottom: 0.75rem; /* 12px */
 }
 
-label {
+/* Label otázky – modré */
+.question-card .question-header label {
   font-weight: 600;
-  font-size: 18px; /* větší písmo pro otázku */
+  font-size: 1.25rem; /* 20px */
+  color: #0077cc;     /* modrá */
 }
 
+/* Input text pro otázku */
 input[type=text] {
   width: 100%;
-  padding: 10px;
-  margin-top: 8px;
+  padding: 0.625rem; /* 10px */
+  margin-top: 0.5rem; /* 8px */
   box-sizing: border-box;
-  font-size: 16px;
+  font-size: 1rem; /* 16px */
   border-radius: 6px;
   border: 1px solid #ccc;
+  color: #000; /* černý text */
 }
 
 .option-row {
   display: flex;
-  gap: 12px;
-  margin-top: 12px; /* větší odsazení mezi možnostmi */
+  gap: 0.75rem; /* 12px */
+  margin-top: 0.75rem;
   align-items: center;
 }
 
+/* Možnosti odpovědí – černé */
 .option-row input {
   flex: 1;
-  padding: 10px;
-  font-size: 16px;
+  padding: 0.625rem; /* 10px */
+  font-size: 1rem; /* 16px */
   border-radius: 6px;
   border: 1px solid #ccc;
+  color: #000;
 }
 
-/* šedé X pro odstranění možnosti */
+/* Šedé X pro odstranění možnosti */
 .remove-btn {
   background: #ccc;
-  padding: 6px 10px;
-  border-radius: 50%;
-  font-size: 16px;
+  padding: 0.375rem 0.625rem; /* 6px 10px */
+  border-radius: 4px;
+  font-size: 1rem; /* 16px */
   cursor: pointer;
-  color: #fff; /* bílý text pro kontrast */
+  color: #fff;
   border: none;
 }
 
 .remove-btn:hover {
-  background: #888888;
+  background: #888;
 }
 
-/* Přidat možnost – menší, tmavší šedé tlačítko s bílým textem */
+/* Přidat možnost */
 .add-option-btn {
-  margin-top: 12px;
-  background: #a0a0a0; /* tmavší šedá */
-  color: #fff;          /* bílý text pro kontrast */
-  padding: 8px 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem; /* 8px */
+  margin-top: 1rem; /* 16px */
+  margin-bottom: 0.75rem; /* 12px */
+  padding: 0.5rem 0.75rem; /* 8px 12px */
+  border: 2px solid darkorange;
+  background: transparent;
+  color: #000;
   border-radius: 6px;
-  font-size: 14px;
-  font-weight: 500;     /* menší tučnost */
-  border: none;
+  font-size: 1rem; /* 16px */
+  font-weight: 500;
   cursor: pointer;
-  transition: 0.2s;
+  transition: background 0.2s, transform 0.2s;
 }
 
 .add-option-btn:hover {
-  background: #888888; /* tmavší při hover */
+  background: rgba(0, 0, 0, 0.05);
+  transform: translateY(-1px);
 }
 
-/* Přidat otázku – větší modré tlačítko s bílým textem */
+/* Kolečko s pluskem */
+.add-option-btn .circle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 1.5rem; /* 24px */
+  height: 1.5rem; /* 24px */
+  background-color: #000;
+  color: #fff;
+  border-radius: 50%;
+  font-size: 1.125rem; /* 18px */
+  font-weight: bold;
+}
+
+.add-option-btn .btn-text {
+  color: #000;
+}
+
+/* Přidat otázku */
 .add-question-btn {
-  margin: 25px 0 10px 0;
+  margin: 1.5rem 0 0.625rem 0; /* 24px 0 10px */
   background: #0077cc;
   color: white;
-  padding: 14px 24px;
+  padding: 0.875rem 1.5rem; /* 14px 24px */
   border-radius: 10px;
   font-weight: 600;
-  font-size: 18px;
+  font-size: 1.125rem; /* 18px */
   border: none;
   cursor: pointer;
   display: inline-block;
@@ -97,13 +144,13 @@ input[type=text] {
 
 /* Malý křížek pro odstranění otázky */
 .remove-question-btn.small {
-  background: #ff4d4d; /* červené pozadí */
-  color: #000;         /* černý křížek */
-  padding: 4px 10px;
-  border-radius: 50%;
+  background: #ff4d4d;
+  color: #000;
+  padding: 0.25rem 0.625rem; /* 4px 10px */
+  border-radius: 4px;
   border: none;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 1.125rem; /* 18px */
 }
 
 .remove-question-btn.small:hover {
@@ -114,16 +161,66 @@ input[type=text] {
 .multi-answer {
   display: flex;
   align-items: center;
-  margin-top: 12px;
-  font-size: 16px;
+  margin-top: 0.75rem; /* 12px */
+  font-size: 1rem; /* 16px */
 }
 
 .multi-answer input[type=checkbox] {
-  margin-right: 8px;
-  width: 18px;
-  height: 18px;
+  margin-right: 0.5rem; /* 8px */
+  width: 1.125rem; /* 18px */
+  height: 1.125rem;
 }
 
+/* Checkbox pro zobrazit výsledky */
+.show-results-checkbox input[type="checkbox"] {
+  width: 2rem;  /* větší checkbox */
+  height: 2rem;
+  margin-right: 0.75rem; /* větší mezera od textu */
+  cursor: pointer;
+  accent-color: #ff9800;
+  background-color: #0077cc;
+}
+
+.show-results-checkbox {
+  display: flex;
+  align-items: center;   /* vertikálně centrovat text s checkboxem */
+  font-size: 1.25rem;   /* větší text */
+  font-weight: 600;     /* tučný text */
+  gap: 0.75rem;         /* mezera mezi checkboxem a textem */
+}
+
+
+
+/* Divider */
+.settings-divider {
+  border: none;
+  height: 0.125rem; /* 2px */
+  background: linear-gradient(to right, #0077cc, #ff9800);
+  margin: 2.5rem 0 1.25rem 0; /* 40px 0 20px */
+  border-radius: 4px;
+}
+
+/* Chyby */
+input.invalid,
+textarea.invalid {
+  border: 2px solid #e74c3c;
+  background-color: #fdecea;
+}
+
+.error-text {
+  color: #e74c3c;
+  font-size: 0.9rem;
+  margin-top: 0.25rem;
+}
+
+.error-message {
+  color: #d32f2f;
+  font-weight: bold;
+  margin: 0.9375rem 0; /* 15px */
+  text-align: center;
+}
+
+/* Tlačítko odeslání */
 .submit-btn[disabled] {
   background-color: #ccc;
   cursor: not-allowed;
@@ -132,11 +229,11 @@ input[type=text] {
   box-shadow: none;
 }
 
-.error-message {
-  color: #d32f2f; /* červená barva */
-  font-weight: bold;
-  margin: 15px 0;
-  text-align: center;
+/* Nadpis „Možnosti odpovědí“ – tmavě modrá */
+h3 {
+  font-size: 1.125rem; /* 18px */
+  color: #0077cc;
+  font-weight: 600;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
 }
-
-

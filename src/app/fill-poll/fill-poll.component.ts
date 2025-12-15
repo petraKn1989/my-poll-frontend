@@ -16,9 +16,10 @@ export class FillPollComponent implements OnInit {
 
   @ViewChild('surveyForm') surveyForm!: NgForm;
 
-  pollId!: number;
+ // pollId!: number;
   pollData: any;
   isSubmitting = false; // ⬅ proměnná pro zabránění dvojitého odeslání
+  slug!: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -27,10 +28,22 @@ export class FillPollComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.pollId = Number(this.route.snapshot.paramMap.get('id'));
+   // this.pollId = Number(this.route.snapshot.paramMap.get('id'));
+    this.slug = this.route.snapshot.paramMap.get('slug')!;
 
-    this.pollService.getPoll(this.pollId).subscribe(data => {
+  
+
+    this.pollService.getPollbyUIID(this.slug).subscribe(data => {
       this.pollData = data;
+
+ 
+    // Zkus všechny varianty jednu po druhé
+    // this.pollData.status = 'active';
+  // this.pollData.status = 'deleted';
+    // this.pollData.status = 'paused';
+  // this.pollData.status = 'finished_hidden';
+//this.pollData.status = 'finished_published';
+
       console.log("Načtená anketa:", this.pollData);
 
       // Inicializace polí pro radio a checkboxy
@@ -87,8 +100,18 @@ export class FillPollComponent implements OnInit {
     }
 
     return {
-      pollId: this.pollId,
+      pollId: this.pollData.id,
       answers: result
     };
   }
+
+  getPercentage(votes: number): string {
+    if (!this.pollData || !this.pollData.totalVotes || this.pollData.totalVotes === 0) {
+      return '0 %';
+    }
+    const percent = (votes / this.pollData.totalVotes) * 100;
+    return percent.toFixed(1) + ' %'; // 1 desetinné místo
+  }
+
+
 }

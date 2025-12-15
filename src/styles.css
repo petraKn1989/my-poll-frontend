@@ -9,7 +9,7 @@ body {
   margin: 0;
   font-family: 'Inter', Arial, sans-serif;
   color: #333;
-  font-size: 18px;  /* větší písmo */
+  font-size: 14px;  /* větší písmo */
   line-height: 1.8; /* větší řádkování */
 }
 
@@ -26,6 +26,7 @@ h1 {
   text-align: center;
   color: #0077cc;
   margin-bottom: 30px;
+  font-size: 32px;
 }
 
 .seo-content {

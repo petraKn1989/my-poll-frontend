@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PollStoreService {
   private pollId: number | null = null;
+  private pollUuid: string = '';
 
-  constructor() { }
+  constructor() {}
 
   setPollId(id: number) {
     this.pollId = id;
@@ -18,5 +19,12 @@ export class PollStoreService {
 
   clearPollId() {
     this.pollId = null;
+  }
+
+  setPollUuid(uuid: string) {
+    this.pollUuid = uuid;
+  }
+  getPollUuid(): string {
+    return this.pollUuid;
   }
 }

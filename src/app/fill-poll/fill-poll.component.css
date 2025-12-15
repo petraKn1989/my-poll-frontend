@@ -1,7 +1,3 @@
-/* ---------------------------
-   SURVEY COMPONENT STYLES
----------------------------- */
-
 .container {
   max-width: 700px;
   margin: 50px auto;
@@ -9,15 +5,129 @@
   padding: 40px 30px;
   border-radius: 16px;
   box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.container:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 35px rgba(0,0,0,0.15);
 }
 
 h1 {
+  text-align: center;
+  color: #0077cc;
+  margin-bottom: 35px;
+  font-size: 34px;
+  font-weight: 700;
+}
+
+.question-block {
+  margin-bottom: 20px;
+  padding: 15px;
+  border-radius: 12px;
+  background: #eef5ff;
+  border: 1px solid #c8dfff;
+}
+
+.option-block {
+  margin-left: 10px;
+  margin-bottom: 10px;
+}
+
+input[type="radio"], input[type="checkbox"] {
+  margin-right: 10px;
+  accent-color: #0077cc;
+  cursor: pointer;
+}
+
+input[disabled] {
+  cursor: not-allowed;
+}
+
+label {
+  font-size: 22px;
+  color: #2c2c2c;
+}
+
+button.submit-btn {
+  display: block;
+  margin: 20px auto 0 auto;
+  padding: 12px 25px;
+  background-color: #ff6600;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+button[disabled] {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Status hlášky */
+.status-message {
+  padding: 15px 20px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.status-message h2 {
+  margin: 0 0 8px 0;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.status-message.deleted {
+  background-color: #ffe6e6;
+  color: #b30000;
+  border: 1px solid #b30000;
+}
+
+.status-message.paused {
+  background-color: #fff8e6;
+  color: #cc6600;
+  border: 1px solid #cc6600;
+}
+
+
+
+.status-message.finished-hidden {
+  background-color: #eef4fb;       /* jemně modrý podklad */
+  border-left: 6px solid #0077cc;  /* modrý pruh */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  margin-bottom: 20px;
+  color: #1a1a1a;
+}
+
+.status-message.finished-hidden h2 {
+  font-size: 22px;
+  color: #0077cc;
+  margin-bottom: 10px;
+}
+
+.status-message.finished-hidden p {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #333;
+}
+
+.status-message.finished-published {
+  background-color: #fff5e6;
+  color: #e65c00;
+  border: 1px solid #e65c00;
+}
+
+.results-container {
+  max-width: 750px;
+  margin: 40px auto;
+  padding: 30px;
+  background: #f7f9fc;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.results-container h1 {
   text-align: center;
   color: #0077cc;
   margin-bottom: 35px;
@@ -27,159 +137,152 @@ h1 {
 }
 
 .question-block {
-  margin-bottom: 30px;
+  background: #ffffff;
   padding: 20px;
-  border-radius: 12px;
-  background: #eef5ff;
-  border: 1px solid #c8dfff;
-  transition: background 0.3s ease, box-shadow 0.3s ease;
-}
-
-.question-block:hover {
-  background: #e0ebff;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  margin-bottom: 20px;
+  border-left: 6px solid #ff9800;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
 
 .question-text {
-  font-size: 18px;
   font-weight: 600;
+  font-size: 25px;
   margin-bottom: 15px;
-  color: #1a1a1a;
+  color: #333;
 }
 
-.option-block {
-  margin-left: 10px;
-  margin-bottom: 12px;
+.options-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
-input[type="radio"],
-input[type="checkbox"] {
-  margin-right: 12px;
-  accent-color: #0077cc;
-  cursor: pointer;
-  transform: scale(1.2);
-  transition: transform 0.2s ease;
+.options-list li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
 }
 
-input[type="radio"]:hover,
-input[type="checkbox"]:hover {
-  transform: scale(1.3);
-}
-
-label {
-  font-size: 16px;
-  color: #2c2c2c;
-  cursor: pointer;
-  user-select: none;
-  transition: color 0.2s ease;
-}
-
-label:hover {
-  color: #0077cc;
-}
-
-button {
-  display: block;
-  margin: 30px auto 0 auto;
-  padding: 16px 32px;
-  background-color: #fd7e14;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  font-size: 18px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.3s ease, transform 0.2s ease;
-}
-
-button:hover {
-  background-color: #e36e0a;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 15px rgba(0,0,0,0.15);
-}
-
-.info-text {
-  margin-top: 30px;
+.option-name {
+  flex: 1;
   font-size: 16px;
   color: #555;
-  background: #f0f0f0;
-  padding: 15px 20px;
+}
+
+.option-bar {
+  display: inline-block;
+  height: 20px;
+  background-color: #2196f3;
   border-radius: 10px;
-  line-height: 1.6;
-  text-align: center;
-  transition: background 0.3s ease;
+  margin: 0 10px;
+  transition: width 0.5s ease;
 }
 
-.info-text:hover {
-  background: #e8e8e8;
-}
-
-.highlight-orange {
-  color: #fd7e14;
-  font-weight: 700;
-}
-
-input[type="radio"]:checked + label,
-input[type="checkbox"]:checked + label {
-  font-weight: 700;
-  color: #0077cc;
-}
-
-.option-block {
-  display: flex;
-  justify-content: space-between; /* text vlevo, hlas vpravo */
-  align-items: center;
-  margin-left: 10px;
-  margin-bottom: 12px;
-}
-
-
-@media (max-width: 768px) {
-  .container {
-    margin: 20px;
-    padding: 30px 20px;
-  }
-
-  h1 {
-    font-size: 28px;
-  }
-
-  .question-text {
-    font-size: 16px;
-  }
-
-  button {
-    font-size: 16px;
-  }
+.option-count {
+  width: 60px;
+  text-align: right;
+  font-weight: 500;
+  color: #2a3f54;
 }
 
 .total-votes {
-  margin: 15px 0;
   font-weight: bold;
-  color: #ff6600; /* oranžová */
-  font-size: 1.1rem;
+  font-size: 18px;
+  margin-top: 15px;
+  color: #555555;;
 }
-.option-votes {
-  margin-left: 10px;
-  color: #555;
-  font-size: 0.9rem;
+
+.poll-actions {
+  text-align: center;
+  margin-top: 30px;
 }
-.question-text {
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-.option-block {
-  margin-bottom: 5px;
-}
-button[type="submit"] {
-  padding: 10px 20px;
-  background-color: #ff6600;
+
+.delete-btn {
+  background-color: #ff4d4f;
   color: white;
   border: none;
-  border-radius: 4px;
+  padding: 12px 25px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.delete-btn:hover {
+  background-color: #d9363e;
+}
+
+/* Zvětšení textu u labelů pro radio a checkbox */
+label {
+  font-size: 18px !important; /* dříve 22px, můžete upravit dle potřeby */
+  color: #2c2c2c;
+  display: flex;
+  align-items: center;
+}
+
+/* Zvýraznění a zvětšení samotných inputů */
+input[type="radio"],
+input[type="checkbox"] {
+  width: 22px;   /* větší než default */
+  height: 22px;  /* větší než default */
+  margin-right: 12px;
+  accent-color: #0077cc;
   cursor: pointer;
 }
-button[type="submit"]:hover {
-  background-color: #e65c00;
+
+/* Zakázaný stav inputů */
+input[disabled] {
+  cursor: not-allowed;
 }
+
+/* Pokud chcete, aby text a input byly vertikálně hezky zarovnané */
+.option-block {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+/* Cílení přímo na label uvnitř option-block */
+.option-block label {
+  font-size: 20px !important;  /* text se zvětší */
+  color: #2c2c2c;
+  display: flex;
+  align-items: center;
+  gap: 8px; /* prostor mezi input a textem */
+  padding-right: 15px;
+}
+
+/* Zvýšení velikosti radio a checkbox inputů */
+.option-block input[type="radio"],
+.option-block input[type="checkbox"] {
+  width: 22px;
+  height: 22px;
+  accent-color: #0077cc;
+  cursor: pointer;
+}
+
+.option-item {
+  display: flex;                /* flexbox */
+  justify-content: space-between; /* text vlevo, hlasy vpravo */
+  align-items: center;          /* vertikálně zarovnané */
+  padding: 5px 0;
+  font-size: 18px;
+}
+
+.option-text {
+  font-weight: 500;
+   flex: 1;
+   padding-left: 15px;
+}
+
+.option-votes {
+  font-size: 16px; /* menší než text volby */
+  color: darkgray;
+  text-align: right; /* jen pro jistotu */
+}
+
+
+
+
 

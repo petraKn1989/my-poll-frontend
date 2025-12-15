@@ -1,0 +1,187 @@
+/* KONTEJNER */
+.survey-options-container {
+  max-width: 900px;
+  margin: 50px auto;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 20px; /* kulatá tabulka */
+  box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+  font-family: Arial, sans-serif;
+}
+
+/* NADPIS */
+.options-title {
+  color: #0077cc;
+  text-align: center;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 30px;
+}
+
+/* TABULKA */
+.survey-options-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 3px; /* jemný oddělovač mezi řádky */
+  font-size: 17px;
+  overflow: hidden;
+  border-radius: 20px; /* kulatá hrana celé tabulky */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* HLAVIČKA */
+.survey-options-table thead {
+  background: #0077cc;
+  color: #ffffff;
+}
+
+.survey-options-table th {
+  padding: 14px;
+  text-align: left;
+  font-weight: 700;
+  border-bottom: 2px solid #005fa3;
+  border-right: 1px solid #d1d1d1; /* lehký svislý oddělovač */
+}
+
+.survey-options-table th:last-child {
+  border-right: none;
+}
+
+/* ŘÁDKY TABULKY */
+.survey-options-table tbody td {
+  padding: 14px;
+  color: #333;
+  background: #ffffff; /* základní bílá */
+  border-right: 1px solid #dcdcdc; /* lehký svislý oddělovač */
+}
+
+.survey-options-table tbody td:last-child {
+  border-right: none;
+}
+
+/* STŘÍDAVÉ BARVY ŘÁDKŮ */
+.survey-options-table tbody tr:nth-child(even) td {
+  background: #fff3e0; /* jemná oranžová */
+}
+
+/* Hover efekt na řádky */
+.survey-options-table tbody tr:hover td {
+  background: #e6f0ff;
+  transition: 0.2s ease;
+}
+
+/* ZAOBLENÍ HRAN TABULKY */
+.survey-options-table thead tr:first-child th:first-child {
+  border-top-left-radius: 20px;
+}
+
+.survey-options-table thead tr:first-child th:last-child {
+  border-top-right-radius: 20px;
+}
+
+.survey-options-table tbody tr:last-child td:first-child {
+  border-bottom-left-radius: 20px;
+}
+
+.survey-options-table tbody tr:last-child td:last-child {
+  border-bottom-right-radius: 20px;
+}
+
+/* TLAČÍTKA */
+.opt-btn {
+  padding: 8px 18px;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s ease;
+  font-size: 14px;
+}
+
+.opt-green { background: #28a745; }
+.opt-green:hover { background: #218838; }
+
+.opt-orange { background: #fd7e14; }
+.opt-orange:hover { background: #e36e0a; }
+
+.opt-red { background: #dc3545; }
+.opt-red:hover { background: #b02a37; }
+
+.opt-blue { background: #0077cc; }
+.opt-blue:hover { background: #005fa3; }
+
+/* Info box po vybrání akce */
+.info-text {
+  margin-top: 30px;
+  padding: 20px;
+  background: #eef5ff;
+  border-radius: 12px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 22px !important;
+  color: orangered;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.published-box {
+  margin-top: 30px;
+  padding: 15px;
+  border: 1px solid #a3c9f1;      /* jemný modrý rámeček */
+  border-radius: 8px;              /* jemně zaoblené rohy */
+  background-color: #e6f0fa;       /* světle modré pozadí */
+  color: #d2691e;                  /* tmavě oranžový text */
+  font-weight: 600;
+  font-size: 16px;
+  text-align: left;                /* text zarovnán vlevo */
+}
+
+
+/* Mobilní verze */
+@media (max-width: 768px) {
+  .survey-options-table td, th {
+    padding: 8px;
+    font-size: 13px;
+  }
+
+  .opt-btn {
+    padding: 6px 12px;
+  }
+}
+
+/* Hláška paused - varianta 2 */
+.paused-alert {
+  margin-bottom: 30px;
+  max-width: 900px;
+  padding: 25px;
+  border-radius: 15px;
+  background-color: #fff59d;       /* středně světlá žlutá */
+  color: #0d47a1;                  /* tmavší modrá text */
+  border: 2px solid #64b5f6;       /* světle modrý rámeček */
+  font-size: 20px;                  /* větší písmo */
+  font-weight: 600;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  font-family: Arial, sans-serif;
+}
+
+.paused-alert span {
+  display: block;
+  margin-top: 8px;
+  font-weight: 500;
+  font-size: 18px;
+  opacity: 0.85;
+}
+
+/* Mobilní verze */
+@media (max-width: 768px) {
+  .paused-alert {
+    font-size: 18px;
+    padding: 18px;
+  }
+
+  .paused-alert span {
+    font-size: 16px;
+  }
+}
+

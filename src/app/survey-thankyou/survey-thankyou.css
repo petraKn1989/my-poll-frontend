@@ -8,7 +8,7 @@
   padding: 20px;
 }
 
-/* Karta s poděkováním */
+/* Karta – BEZE ZMĚNY charakteru */
 .thankyou-card {
   background: #fff;
   padding: 30px 40px;
@@ -17,74 +17,60 @@
   text-align: center;
   max-width: 500px;
   width: 100%;
-  animation: fadeIn 0.5s ease-out;
 }
 
-/* Velká ikona ✔ */
+/* Ikona */
 .thankyou-icon {
-  font-size: 48px;
+  font-size: 42px;
   color: #28a745;
+  margin-bottom: 15px;
+}
+
+/* HLAVNÍ TEXT */
+.thankyou-text-main {
+  font-size: 20px;
+  font-weight: 600;
+  color: #ff7f50; /* zůstává vaše oranžová */
+  line-height: 1.6;
   margin-bottom: 20px;
 }
 
-/* Text poděkování */
-.thankyou-text {
-  font-size: 18px;
-  margin-bottom: 25px;
-  color: #333;
-  line-height: 1.5;
-}
-
-/* Skupina tlačítek */
-.button-group {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
-}
-
-/* Tlačítko pro vytvoření nové ankety */
-.create-poll-btn {
-  background-color: #ff7f50;
-  color: #fff;
+/* Jemná čára */
+.thankyou-divider {
   border: none;
-  padding: 10px 18px;
-  border-radius: 6px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.2s;
+  height: 1px;
+  background-color: #e5e5e5;
+  width: 60%;
+  margin: 20px auto;
 }
 
-.create-poll-btn:hover {
-  background-color: #ff6347;
-}
-
-/* Text pro sdílení / informace */
-.share-note {
+/* Nenápadný spodní text */
+.thankyou-link {
   font-size: 14px;
-  color: #666;
-  line-height: 1.4;
+  color: #777;
 }
 
-/* Jednoduchá fade-in animace pro kartu */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
+.thankyou-link a {
+  color: #0077cc;
+  text-decoration: none;
 }
 
-/* Responzivita pro menší obrazovky */
+.thankyou-link a:hover {
+  text-decoration: underline;
+}
+.thankyou-subtext {
+  color: #000;
+  font-weight: 500;
+
+}
+
+/* Mobil */
 @media (max-width: 480px) {
   .thankyou-card {
-    padding: 20px 25px;
+    padding: 22px 25px;
   }
 
-  .thankyou-text {
-    font-size: 16px;
-  }
-
-  .create-poll-btn {
-    font-size: 14px;
-    padding: 8px 14px;
+  .thankyou-text-main {
+    font-size: 18px;
   }
 }

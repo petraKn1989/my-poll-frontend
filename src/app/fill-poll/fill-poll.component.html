@@ -1,25 +1,96 @@
-<div class="container" *ngIf="pollData && pollData.questions.length > 0; else loading">
-  <h1>Dotazník</h1>
+<!-- Deleted -->
+<div *ngIf="pollData?.status === 'deleted'" class="status-message deleted">
+  <div class="container">
+    <h2>Dotazník byl smazán</h2>
+    <p>Už není možné hlasovat ani zobrazit otázky či výsledky.</p>
+  </div>
+</div>
 
-  <form (ngSubmit)="submitSurvey()" #surveyForm="ngForm">
+<!-- Active / Paused / Finished Hidden / Finished Published -->
+<div *ngIf="pollData && pollData.status !== 'deleted'">
+  <div class="container" *ngIf="pollData.questions.length > 0; else loading">
+    <h1>Vyplňte anketu</h1>
 
-    <div class="question-block" *ngFor="let q of pollData.questions; let i=index">
-      <div class="question-card">
+    <h2 style="font-size: 25px">{{ pollData.title }}</h2>
+
+    <!-- Status hlášky -->
+    <div *ngIf="pollData.status === 'paused'" class="status-message paused">
+      <h2>Hlasování je dočasně pozastaveno</h2>
+      <p>Autor může hlasování později znovu aktivovat.</p>
+    </div>
+
+    <div *ngIf="pollData.status === 'finished_hidden'" class="status-message finished-hidden">
+      <h2>Hlasování bylo ukončeno</h2>
+      <p>Výsledky ankety jsou tajné, tudíž nejsou veřejně k dispozici.</p>
+    </div>
+
+    <!-- Finished Published -->
+    <div
+      *ngIf="pollData.status === 'finished_published'"
+      class="results-container finished-published"
+    >
+      <div class="status-message finished-published">
+        <h2>Hlasování ukončeno</h2>
+        <p>Podívejte se na výsledky ankety:</p>
+      </div>
+
+      <div *ngFor="let q of pollData.questions; let i = index" class="question-block">
+        <p class="question-text">{{ i + 1 }}. {{ q.text }}</p>
+
+        <ul class="options-list">
+          <li *ngFor="let opt of q.options" class="option-item">
+            <span class="option-text">{{ opt.text }}</span>
+            <span
+              class="option-votes"
+              *ngIf="pollData.showResults || pollData.status === 'finished_published'"
+            >
+              {{ opt.votes ?? 0 }} hlasů ({{ getPercentage(opt.votes ?? 0) }})
+            </span>
+          </li>
+        </ul>
+      </div>
+
+      <div
+        class="total-votes"
+        *ngIf="
+          (pollData.showResults || pollData.status === 'finished_published') &&
+          pollData.totalVotes !== undefined
+        "
+      >
+        Celkem odesláno hlasování: {{ pollData.totalVotes }}
+      </div>
+    </div>
+
+    <!-- Formulář pro active / paused / finished_hidden -->
+    <form
+      (ngSubmit)="submitSurvey()"
+      #surveyForm="ngForm"
+      *ngIf="
+        pollData.status === 'active' ||
+        pollData.status === 'paused' ||
+        pollData.status === 'finished_hidden'
+      "
+    >
+      <div class="question-block" *ngFor="let q of pollData.questions; let i = index">
         <p class="question-text">{{ i + 1 }}. {{ q.text || 'Otázka bez textu' }}</p>
 
         <!-- Jedna odpověď -->
         <div *ngIf="!q.allowMultiple">
           <div class="option-block" *ngFor="let opt of q.options">
             <label>
-              <input 
+              <input
                 type="radio"
                 name="question_{{ q.id }}"
                 [(ngModel)]="q.selectedOptionId"
                 [value]="opt.id"
-              >
+                [disabled]="pollData.status !== 'active'"
+              />
               {{ opt.text }}
             </label>
-            <span class="option-votes" *ngIf="opt.votes !== undefined">{{ opt.votes }} hlasů</span>
+            <!-- Hlasy a procenta, pokud showResults je true -->
+            <span class="option-votes" *ngIf="pollData.showResults">
+              {{ opt.votes ?? 0 }} hlasů ({{ getPercentage(opt.votes ?? 0) }})
+            </span>
           </div>
         </div>
 
@@ -27,36 +98,37 @@
         <div *ngIf="q.allowMultiple">
           <div class="option-block" *ngFor="let opt of q.options">
             <label>
-              <input 
+              <input
                 type="checkbox"
                 [(ngModel)]="q.selectedOptions[opt.id]"
                 name="question_{{ q.id }}_{{ opt.id }}"
-              >
+                [disabled]="pollData.status !== 'active'"
+              />
               {{ opt.text }}
             </label>
-            <span class="option-votes" *ngIf="opt.votes !== undefined">{{ opt.votes }} hlasů</span>
+            <!-- Hlasy a procenta, pokud showResults je true -->
+            <span class="option-votes" *ngIf="pollData.showResults">
+              {{ opt.votes ?? 0 }} hlasů ({{ getPercentage(opt.votes ?? 0) }})
+            </span>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="total-votes" *ngIf="pollData.totalVotes !== undefined">
-      Celkem odesláno hlasování: {{ pollData.totalVotes }}
-    </div>
+      <div class="total-votes" *ngIf="pollData.showResults && pollData.totalVotes !== undefined">
+        Celkem odesláno hlasování: {{ pollData.totalVotes }}
+      </div>
 
-    <button type="submit" class="submit-btn" [disabled]="isSubmitting">
-      <span *ngIf="isSubmitting" class="spinner"></span>
-      {{ isSubmitting ? 'Odesílám...' : 'Odeslat' }}
-    </button>
-
-  </form>
-
-  <div class="info-text">
-    Sdílejte tento dotazník se svými respondenty.
-    <span class="highlight-orange">Děkujeme za vyplnění!</span>
+      <button
+        type="submit"
+        class="submit-btn"
+        [disabled]="pollData.status !== 'active' || isSubmitting"
+      >
+        {{ isSubmitting ? 'Odesílám...' : 'Odeslat' }}
+      </button>
+    </form>
   </div>
-</div>
 
-<ng-template #loading>
-  <p>Načítám dotazník…</p>
-</ng-template>
+  <ng-template #loading>
+    <p>Načítám dotazník…</p>
+  </ng-template>
+</div>

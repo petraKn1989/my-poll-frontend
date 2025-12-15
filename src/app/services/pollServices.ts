@@ -20,10 +20,21 @@ export class PollService {
   getPoll(id: number): Observable<Poll> {
     return this.http.get<Poll>(`${this.baseUrl}/polls/${id}`);
   }
+  getPollbyUIID(slug: string): Observable<Poll> {
+    return this.http.get<Poll>(`${this.baseUrl}/api/polls/${slug}`);
+  }
 
   sendAnswers(data: AnswerRequest): Observable<any> {
     return this.http.post(`${this.baseUrl}/api/answers`, data);
   }
+
+deletePoll(id: number) {
+  return this.http.delete(`${this.baseUrl}/poll/${id}`);
+}
+updateStatus(pollId: number, status: string): Observable<{status: string}> {
+  return this.http.patch<{status: string}>(`${this.baseUrl}/poll/${pollId}/status`, { status });
+}
+
 
 
 }

@@ -1,0 +1,61 @@
+<!-- Tabulka akcí: zobrazí se jen při active nebo paused -->
+<div class="survey-options-container" *ngIf="pollStatus === 'active' || pollStatus === 'paused'">
+
+  <!-- Paused hláška nad tabulkou -->
+<div *ngIf="pollStatus === 'paused'" class="paused-alert">
+  Hlasování je pozastaveno.
+  <span>Můžete jej <strong>obnovit</strong> nebo provést další akce níže.</span>
+</div>
+
+  <h2 class="options-title">Administrátorský panel ankety</h2>
+
+  <table class="survey-options-table">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Možnost</th>
+        <th>Co uvidí hlasující</th>
+      
+        <th>Akce</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let action of actions; let i = index">
+        <!-- Active se zobrazuje jen pokud je anketa paused -->
+        <ng-container *ngIf="!(action.status === 'active' && pollStatus === 'active')">
+          <td><strong>{{ action.id }}</strong></td>
+          <td><strong>{{ action.title }}</strong></td>
+          <td>{{ action.userView }}</td>
+        
+          <td>
+            <button class="opt-btn" [ngClass]="action.colorClass" (click)="selectAction(action)">
+              Vybrat
+            </button>
+          </td>
+        </ng-container>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+
+<!-- Deleted -->
+<div *ngIf="pollStatus === 'deleted'" class="published-box" style="color:red !important;">
+  <p>Anketa byla smazána.</p>
+</div>
+
+<!-- Finished Published -->
+<div *ngIf="pollStatus === 'finished_published'"  class="published-box">
+  <p>Výsledky ankety jsou zveřejněny.</p>
+  <p><b>Hlasování bylo ukončeno.</b></p>
+</div>
+
+<!-- Finished Hidden -->
+<div *ngIf="pollStatus === 'finished_hidden'" class="published-box">
+  <p>Výsledky ankety nejsou zveřejněny.</p>
+  <p><b>Hlasování bylo ukončeno.</b></p>
+</div>
+
+
