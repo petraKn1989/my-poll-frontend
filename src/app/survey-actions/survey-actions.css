@@ -4,43 +4,43 @@
   margin: 50px auto;
   padding: 30px;
   background: #ffffff;
-  border-radius: 20px; /* kulatá tabulka */
-  box-shadow: 0 12px 30px rgba(0,0,0,0.12);
-  font-family: Arial, sans-serif;
+  border-radius: 16px; /* mírně menší kulaté hrany */
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 /* NADPIS */
 .options-title {
   color: #0077cc;
   text-align: center;
-  font-size: 28px;
+  font-size: 26px;
   font-weight: 700;
-  margin-bottom: 30px;
+  margin-bottom: 25px;
 }
 
 /* TABULKA */
 .survey-options-table {
   width: 100%;
   border-collapse: separate;
-  border-spacing: 0 3px; /* jemný oddělovač mezi řádky */
-  font-size: 17px;
+  border-spacing: 0 3px;
+  font-size: 16px;
   overflow: hidden;
-  border-radius: 20px; /* kulatá hrana celé tabulky */
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  border-radius: 16px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.06);
 }
 
 /* HLAVIČKA */
 .survey-options-table thead {
-  background: #0077cc;
+  background: #005fa3;
   color: #ffffff;
 }
 
 .survey-options-table th {
-  padding: 14px;
+  padding: 12px;
   text-align: left;
-  font-weight: 700;
-  border-bottom: 2px solid #005fa3;
-  border-right: 1px solid #d1d1d1; /* lehký svislý oddělovač */
+  font-weight: 600;
+  border-bottom: 1px solid #004080;
+  border-right: 1px solid #d1d1d1;
 }
 
 .survey-options-table th:last-child {
@@ -49,22 +49,20 @@
 
 /* ŘÁDKY TABULKY */
 .survey-options-table tbody td {
-  padding: 14px;
+  padding: 12px;
   color: #333;
-  background: #ffffff; /* základní bílá */
-  border-right: 1px solid #dcdcdc; /* lehký svislý oddělovač */
+  background: #ffffff;
+  border-right: 1px solid #e0e0e0;
 }
 
 .survey-options-table tbody td:last-child {
   border-right: none;
 }
 
-/* STŘÍDAVÉ BARVY ŘÁDKŮ */
 .survey-options-table tbody tr:nth-child(even) td {
-  background: #fff3e0; /* jemná oranžová */
+  background: #f9f9f9;
 }
 
-/* Hover efekt na řádky */
 .survey-options-table tbody tr:hover td {
   background: #e6f0ff;
   transition: 0.2s ease;
@@ -72,19 +70,16 @@
 
 /* ZAOBLENÍ HRAN TABULKY */
 .survey-options-table thead tr:first-child th:first-child {
-  border-top-left-radius: 20px;
+  border-top-left-radius: 16px;
 }
-
 .survey-options-table thead tr:first-child th:last-child {
-  border-top-right-radius: 20px;
+  border-top-right-radius: 16px;
 }
-
 .survey-options-table tbody tr:last-child td:first-child {
-  border-bottom-left-radius: 20px;
+  border-bottom-left-radius: 16px;
 }
-
 .survey-options-table tbody tr:last-child td:last-child {
-  border-bottom-right-radius: 20px;
+  border-bottom-right-radius: 16px;
 }
 
 /* TLAČÍTKA */
@@ -115,56 +110,66 @@
 .info-text {
   margin-top: 30px;
   padding: 20px;
-  background: #eef5ff;
+  background: #e0f2ff;  /* jemná světle modrá */
   border-radius: 12px;
   text-align: center;
   font-weight: 600;
   font-size: 22px !important;
-  color: orangered;
+  color: #0d47a1;        /* tmavě modrá text */
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
+/* PUBLISHED / HIDDEN BOX - modernější varianty */
 .published-box {
   margin-top: 30px;
   padding: 15px;
-  border: 1px solid #a3c9f1;      /* jemný modrý rámeček */
-  border-radius: 8px;              /* jemně zaoblené rohy */
-  background-color: #e6f0fa;       /* světle modré pozadí */
-  color: #d2691e;                  /* tmavě oranžový text */
+  border: 1px solid #b0c4de;      /* jemný modrý rámeček */
+  border-radius: 8px;              
+  background-color: #f0f4f8;       /* světle šedé/modré pozadí */
+  color: #2a3f54;                  /* tmavě modrá/šedá */
   font-weight: 600;
   font-size: 16px;
-  text-align: left;                /* text zarovnán vlevo */
+  text-align: left;
+}
+.published-box.hidden {
+  border-left: 6px solid #ffb74d; /* jemná oranžová akcent linka */
+  padding-left: 12px;
 }
 
-
-/* Mobilní verze */
-@media (max-width: 768px) {
-  .survey-options-table td, th {
-    padding: 8px;
-    font-size: 13px;
-  }
-
-  .opt-btn {
-    padding: 6px 12px;
-  }
+/* Variantní barvy pro status */
+.published-box.finished-hidden {
+  background-color: #fff7e6; /* jemně oranžové pozadí */
+  color: #7c4dff;             /* moderní fialová barva textu */
+  border-left-color: #ff9800;
 }
 
-/* Hláška paused - varianta 2 */
+.published-box.finished-published {
+  background-color: #e6f4ea; /* jemně zelené pozadí */
+  color: #2e7d32;
+  border-left-color: #28a745;
+}
+
+.published-box.deleted {
+  background-color: #ffe6e6; /* jemně červené pozadí */
+  color: #c62828;
+  border-left-color: #dc3545;
+}
+
+/* Hláška paused */
 .paused-alert {
   margin-bottom: 30px;
   max-width: 900px;
   padding: 25px;
   border-radius: 15px;
-  background-color: #fff59d;       /* středně světlá žlutá */
-  color: #0d47a1;                  /* tmavší modrá text */
-  border: 2px solid #64b5f6;       /* světle modrý rámeček */
-  font-size: 20px;                  /* větší písmo */
+  background-color: #fff9e6;      /* jemná světle žlutá */
+  color: #5d4037;                  /* tmavší hnědo-šedá */
+  border: 1px solid #ffe082;       /* světlejší rámeček */
+  font-size: 20px;                  
   font-weight: 600;
   text-align: center;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
   font-family: Arial, sans-serif;
 }
-
 .paused-alert span {
   display: block;
   margin-top: 8px;
@@ -173,15 +178,55 @@
   opacity: 0.85;
 }
 
+
 /* Mobilní verze */
 @media (max-width: 768px) {
+  .survey-options-table td, th {
+    padding: 6px;
+    font-size: 13px;
+  }
+  .opt-btn {
+    padding: 6px 12px;
+  }
   .paused-alert {
-    font-size: 18px;
-    padding: 18px;
-  }
-
-  .paused-alert span {
     font-size: 16px;
+    padding: 16px;
   }
+  .paused-alert span {
+    font-size: 14px;
+  }
+}
+.toast-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.toast {
+  color: white;
+  padding: 12px 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  animation: fadeInOut 3s forwards;
+}
+
+.toast-success {
+  background-color: #4caf50; /* tmavě zelená */
+}
+
+.toast-warning {
+  background-color: #ff9800; /* oranžová */
+}
+
+.toast-error {
+  background-color: #f44336; /* červená */
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translateY(20px); }
+  10% { opacity: 1; transform: translateY(0); }
+  90% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(20px); }
 }
 

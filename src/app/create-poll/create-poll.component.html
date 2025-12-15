@@ -3,91 +3,122 @@
 
   <section class="seo-content">
     <h2>Online anketa a dotazník</h2>
-    <p>
-      Vytvořte si vlastní online anketu zdarma, rychlý dotazník nebo hlasování.
-    </p>
+    <p>Vytvořte si vlastní online anketu zdarma, rychlý dotazník nebo hlasování.</p>
   </section>
 
-  <!-- Název ankety -->
-  <p>
-    <label class="name-poll">Název ankety</label>
-    <input type="text" [(ngModel)]="title" placeholder="Zadejte Název ankety" />
-  </p>
+  <!-- Povinné otázky hláška -->
+  <div class="info-note">Všechny otázky, které zadáte, budou povinné pro účastníky ankety.</div>
 
-  <!-- Otázky -->
-  <div class="question-card" *ngFor="let q of questions; let qi = index; trackBy: trackByIndex">
-    <div class="question-header">
-      <label>Otázka {{ qi + 1 }}:</label>
-      <button class="remove-question-btn small" (click)="removeQuestion(qi)">×</button>
-    </div>
-
-    <!-- Text otázky -->
-    <input
-      type="text"
-      [(ngModel)]="q.text"
-      placeholder="Zadejte text otázky"
-      [ngClass]="{'invalid': hasSubmitted && invalidQuestions[qi]?.text}"
-    />
-
-    <!-- Chyba text otázky -->
-    <div *ngIf="hasSubmitted && invalidQuestions[qi]?.text" class="error-text">
-      Text otázky je povinný.
-    </div>
-
-    <!-- Možnosti -->
-    <h3>Možnosti odpovědí</h3>
-    <div class="option-row" *ngFor="let opt of q.options; let oi = index; trackBy: trackByIndex">
+  <!-- Formulář -->
+  <form (ngSubmit)="createPoll()" novalidate>
+    <!-- Název ankety -->
+    <div>
+      <label for="poll-title" class="name-poll">Název ankety</label>
       <input
+        id="poll-title"
+        name="title"
         type="text"
-        [(ngModel)]="q.options[oi]"
-        placeholder="Možnost odpovědi"
-        [ngClass]="{'invalid': hasSubmitted && invalidQuestions[qi]?.options?.[oi]}"
+        [(ngModel)]="title"
+        placeholder="Zadejte Název ankety"
+        [ngClass]="{ invalid: hasSubmitted && !title?.trim() }"
+        required
+        aria-invalid="{{ hasSubmitted && !title?.trim() }}"
       />
-      <button class="remove-btn" (click)="removeOption(qi, oi)">×</button>
+      <div *ngIf="hasSubmitted && !title?.trim()" class="error-text">Název ankety je povinný.</div>
     </div>
 
-  
-    <button class="add-option-btn" (click)="addOption(qi)">
-  <span class="circle">+</span>
-  <span class="btn-text">Přidat možnost</span>
-</button>
+    <!-- Otázky -->
+    <div class="question-card" *ngFor="let q of questions; let qi = index; trackBy: trackByIndex">
+      <div class="question-header">
+        <label [for]="'question-' + qi">Otázka {{ qi + 1 }}:</label>
+        <button
+          type="button"
+          class="remove-question-btn small"
+          (click)="removeQuestion(qi)"
+          [disabled]="questions.length === 1"
+        >
+          ×
+        </button>
+      </div>
 
-    <!-- Povolení více odpovědí -->
-    <label class="multi-answer">
-      <input type="checkbox" [(ngModel)]="q.allowMultiple" />
-      Povolit více odpovědí
-    </label>
-  </div>
+      <!-- Text otázky -->
+      <input
+        [id]="'question-' + qi"
+        [name]="'question-' + qi"
+        type="text"
+        [(ngModel)]="q.text"
+        placeholder="Zadejte text otázky"
+        [ngClass]="{ invalid: hasSubmitted && invalidQuestions[qi]?.text }"
+        aria-invalid="{{ hasSubmitted && invalidQuestions[qi]?.text }}"
+        required
+      />
+      <div *ngIf="hasSubmitted && invalidQuestions[qi]?.text" class="error-text">
+        Text otázky je povinný.
+      </div>
 
-  <!-- Přidat otázku -->
-  <button class="add-question-btn" (click)="addQuestion()">+ Přidat otázku</button>
+      <!-- Možnosti -->
+      <h3>Možnosti odpovědí</h3>
+      <div class="option-row" *ngFor="let opt of q.options; let oi = index; trackBy: trackByIndex">
+        <input
+          [id]="'question-' + qi + '-option-' + oi"
+          [name]="'question-' + qi + '-option-' + oi"
+          type="text"
+          [(ngModel)]="q.options[oi]"
+          placeholder="Možnost odpovědi"
+          [ngClass]="{'invalid': hasSubmitted && invalidQuestions[qi]?.options?.[oi]}"
+          aria-invalid="{{hasSubmitted && invalidQuestions[qi]?.options?.[oi]}}"
+          required
+        />
+        <button
+          type="button"
+          class="remove-btn"
+          (click)="removeOption(qi, oi)"
+          [disabled]="q.options.length <= 2"
+        >
+          ×
+        </button>
+      </div>
 
-  <hr class="settings-divider" />
+      <button type="button" class="add-option-btn" (click)="addOption(qi)">
+        <span class="circle">+</span>
+        <span class="btn-text">Přidat možnost</span>
+      </button>
 
-  <!-- Zobrazit výsledky -->
-  <div class="show-results-container">
-    <label class="show-results-checkbox">
-      <input type="checkbox" [(ngModel)]="showResults" />
-      Zobrazit počet hlasů u jednotlivých možností
-    </label>
-    <p class="show-results-note">
-      Pokud je zaškrtnuto, lidé uvidí, kolik hlasů již bylo dáno pro každou možnost u jednotlivých otázek.
-      Pokud nezaškrtnuto, tyto informace zůstanou skryté.
-    </p>
-  </div>
+      <!-- Povolení více odpovědí -->
+      <label class="multi-answer">
+        <input type="checkbox" [(ngModel)]="q.allowMultiple" [name]="'multi-' + qi" />
+        Povolit více odpovědí
+      </label>
+    </div>
 
-  <!-- Chyba celého formuláře -->
-  <div *ngIf="hasSubmitted && errorMessage" class="error-message">
-    {{ errorMessage }}
-  </div>
+    <!-- Přidat otázku -->
+    <button type="button" class="add-question-btn" (click)="addQuestion()">+ Přidat otázku</button>
 
-  <!-- Odeslání ankety -->
-  <button class="submit-btn" (click)="createPoll()" [disabled]="isSubmitting">
-    Vytvořit anketu
-  </button>
+    <hr class="settings-divider" />
 
-  <!-- Info hláška při odesílání -->
-  <div *ngIf="infoMessage" class="info-message">
-    {{ infoMessage }}
-  </div>
+    <!-- Zobrazit výsledky -->
+    <div class="show-results-container">
+      <label class="show-results-checkbox">
+        <input type="checkbox" [(ngModel)]="showResults" name="showResults" />
+        Zobrazit počet hlasů u jednotlivých možností
+      </label>
+      <p class="show-results-note">
+        Pokud je zaškrtnuto, lidé uvidí, kolik hlasů již bylo dáno pro každou možnost u jednotlivých
+        otázek. Pokud nezaškrtnuto, tyto informace zůstanou skryté.
+      </p>
+    </div>
+
+    <!-- Chyba celého formuláře -->
+    <div *ngIf="hasSubmitted && errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+
+    <!-- Odeslání ankety -->
+    <button type="submit" class="submit-btn" [disabled]="isSubmitting">Vytvořit anketu</button>
+
+    <!-- Info hláška při odesílání -->
+    <div *ngIf="infoMessage" class="info-message">
+      {{ infoMessage }}
+    </div>
+  </form>
 </div>

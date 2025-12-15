@@ -34,6 +34,9 @@ export class SurveyActions implements OnInit {
   actionSelected: boolean = false;
   selectedActionText: string = '';
 
+  toastMessage: string | null = null;
+  toastClass: string = 'toast-success'; // výchozí barva
+
   actions: SurveyAction[] = [
     { id: 0, title: 'Obnovit hlasování', userView: 'K dispozici je opět formulář pro hlasování', colorClass: 'opt-blue', status: 'active' },
     { id: 1, title: 'Ukončit hlasování a zveřejnit výsledky', userView: 'Zobrazí se informační hláška „Hlasování bylo ukončeno“ a výsledky hlasování ', colorClass: 'opt-blue', status: 'finished_published' },
@@ -57,21 +60,41 @@ export class SurveyActions implements OnInit {
     });
   }
 
+   showToast(message: string, type: 'success' | 'warning' | 'error' = 'success', duration: number = 3000) {
+    this.toastMessage = message;
+    switch (type) {
+      case 'success': this.toastClass = 'toast-success'; break;
+      case 'warning': this.toastClass = 'toast-warning'; break;
+      case 'error': this.toastClass = 'toast-error'; break;
+    }
+    setTimeout(() => {
+      this.toastMessage = null;
+    }, duration);
+  }
+
   selectAction(action: SurveyAction) {
-    console.log("select action");
-    console.log("selectAction voláno, pollId:", this.pollId, "status:", action.status);
+
     if (!this.pollId) return;
 
     this.pollService.updateStatus(this.pollId, action.status).subscribe({
      
       next: (res) => {
-         console.log("co to děla" + this.pollId);
+  
         this.selectedActionText = `Status ankety změněn na: ${res.status}`;
         this.actionSelected = true;
         this.pollStatus = res.status; // aktualizujeme status pro okamžité zobrazení změn
 
         // ⚡ emitujeme ven rodiči
         this.statusChanged.emit(res.status);
+
+           // Toast s různou barvou podle akce
+        switch(action.id) {
+          case 0: this.showToast('Hlasování bylo obnoveno', 'success'); break;
+          case 1: this.showToast('Hlasování bylo ukončeno a výsledky jsou zveřejněny', 'success'); break;
+          case 2: this.showToast('Hlasování bylo ukončeno (výsledky skryté)', 'warning'); break;
+          case 3: this.showToast('Anketa byla smazána', 'error'); break;
+          case 4: this.showToast('Hlasování je dočasně pozastaveno', 'warning'); break;
+        }
       },
       error: (err) => {
         this.selectedActionText = `Chyba při změně statusu: ${err.message}`;

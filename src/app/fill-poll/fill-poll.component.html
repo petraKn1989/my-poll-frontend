@@ -1,4 +1,16 @@
+<!-- Chybové dialogové okno -->
+<div class="modal-backdrop" *ngIf="showErrorModal">
+  <div class="modal">
+    <h3>Chyba při odesílání</h3>
+    <p>{{ errorMessageModal }}</p>
+    <button (click)="closeErrorModal()">OK</button>
+  </div>
+</div>
+
+
+
 <!-- Deleted -->
+
 <div *ngIf="pollData?.status === 'deleted'" class="status-message deleted">
   <div class="container">
     <h2>Dotazník byl smazán</h2>

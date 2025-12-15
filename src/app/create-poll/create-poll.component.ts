@@ -23,6 +23,7 @@ export class CreatePollComponent implements OnInit {
   errorMessage: string = '';
   infoMessage: string = '';
   hasSubmitted: boolean = false;
+  alreadyVoted = false;
 
   constructor(
     private pollService: PollService,
@@ -49,12 +50,16 @@ export class CreatePollComponent implements OnInit {
       '@context': 'https://schema.org',
       '@type': 'WebPage',
       name: 'Vytvořit anketu zdarma',
-      description: 'Vytvořte si vlastní online dotazník zdarma. Klíčová slova: ' + this.seo['keywordPool'].join(', '),
+      description:
+        'Vytvořte si vlastní online dotazník zdarma. Klíčová slova: ' +
+        this.seo['keywordPool'].join(', '),
       url: window.location.href,
       mainEntity: {
         '@type': 'Survey',
         name: 'Vytvořit anketu zdarma',
-        description: 'Vytvořte si vlastní online dotazník zdarma. Klíčová slova: ' + this.seo['keywordPool'].join(', '),
+        description:
+          'Vytvořte si vlastní online dotazník zdarma. Klíčová slova: ' +
+          this.seo['keywordPool'].join(', '),
       },
     });
     document.head.appendChild(script);
@@ -63,7 +68,9 @@ export class CreatePollComponent implements OnInit {
   private updateSocialMeta() {
     const url = window.location.href;
     const title = 'Vytvořit anketu zdarma | Online dotazník';
-    const description = 'Vytvořte si vlastní anketu nebo průzkum online zdarma. Klíčová slova: ' + this.seo['keywordPool'].join(', ');
+    const description =
+      'Vytvořte si vlastní anketu nebo průzkum online zdarma. Klíčová slova: ' +
+      this.seo['keywordPool'].join(', ');
     const image = 'https://www.example.com/assets/preview-image.png';
 
     // Open Graph
@@ -81,7 +88,7 @@ export class CreatePollComponent implements OnInit {
   }
 
   private resetInvalidQuestions() {
-    this.invalidQuestions = this.questions.map(q => ({
+    this.invalidQuestions = this.questions.map((q) => ({
       text: false,
       options: q.options.map(() => false),
     }));
@@ -90,7 +97,7 @@ export class CreatePollComponent implements OnInit {
   isQuestionOptionsInvalid(qIndex: number): boolean {
     const q = this.invalidQuestions[qIndex];
     if (!q || !q.options) return false;
-    const filledCount = q.options.filter(v => !v).length;
+    const filledCount = q.options.filter((v) => !v).length;
     return filledCount > q.options.length - 2;
   }
 
@@ -101,6 +108,7 @@ export class CreatePollComponent implements OnInit {
   }
 
   removeQuestion(index: number) {
+    if (this.questions.length <= 1) return; // bezpečné mazání
     this.questions.splice(index, 1);
     this.invalidQuestions.splice(index, 1);
   }
@@ -111,6 +119,7 @@ export class CreatePollComponent implements OnInit {
   }
 
   removeOption(qIndex: number, oIndex: number) {
+    if (this.questions[qIndex].options.length <= 2) return; // bezpečné mazání
     this.questions[qIndex].options.splice(oIndex, 1);
     this.invalidQuestions[qIndex].options.splice(oIndex, 1);
   }
@@ -119,44 +128,51 @@ export class CreatePollComponent implements OnInit {
     return index;
   }
 
-private validateQuestions(): boolean {
-  if (this.questions.length === 0) return false;
+  private validateQuestions(): boolean {
+    if (this.questions.length === 0) return false;
 
-  let isValid = true;
+    let isValid = true;
 
-  this.invalidQuestions = this.questions.map(q => {
-    const emptyOptions = q.options.map(opt => !opt || opt.trim() === '');
-    const filledOptionsCount = q.options.length - emptyOptions.filter(v => v).length;
+    this.invalidQuestions = this.questions.map((q) => {
+      const emptyOptions = q.options.map((opt) => !opt || opt.trim() === '');
+      const filledOptionsCount = q.options.length - emptyOptions.filter((v) => v).length;
 
-    const textInvalid = !q.text || q.text.trim() === '';
-    const optionsInvalid = filledOptionsCount < 2;
+      const textInvalid = !q.text || q.text.trim() === '';
+      const optionsInvalid = filledOptionsCount < 2;
 
-    if (textInvalid || optionsInvalid) isValid = false;
+      if (textInvalid || optionsInvalid) isValid = false;
 
-    return {
-      text: textInvalid,
-      options: emptyOptions
-    };
-  });
+      return {
+        text: textInvalid,
+        options: emptyOptions,
+      };
+    });
 
-  return isValid;
-}
+    return isValid;
+  }
 
+  private validateTitle(): boolean {
+    return !!this.title && this.title.trim().length >= 3;
+  }
 
   // Odeslání ankety
   createPoll() {
     if (this.isSubmitting) return;
 
-
     this.errorMessage = '';
     this.hasSubmitted = true;
+
+    // Validace názvu ankety
+    if (!this.validateTitle()) {
+      this.errorMessage = 'Název ankety musí mít alespoň 3 znaky.';
+      return;
+    }
 
     if (!this.validateQuestions()) {
       this.errorMessage = 'Každá otázka musí mít vyplněný text a alespoň 2 možnosti!';
       return;
     }
 
-    
     this.infoMessage = 'Čekejte prosím, data se odesílají…';
     this.isSubmitting = true;
 
@@ -165,21 +181,37 @@ private validateQuestions(): boolean {
 
     const payload: CreatePollDto = {
       createdAt: formatted,
-      title: this.title,
+      title: this.title.trim(),
       showResults: this.showResults,
-      questions: this.questions.map(q => ({
-        text: q.text,
+      questions: this.questions.map((q) => ({
+        text: q.text.trim(),
         allowMultiple: q.allowMultiple,
-        options: q.options,
+        options: q.options.map((opt) => opt.trim()),
       })),
     };
 
     this.pollService.submitSurvey(payload).subscribe({
-      next: resp => {
+      next: (resp) => {
         this.isSubmitting = false;
         this.infoMessage = '';
         if (resp.id) this.pollStore.setPollId(resp.id);
         if (resp.slug) this.pollStore.setPollUuid(resp.slug);
+
+        // Reset formuláře po úspěšném odeslání
+        this.title = '';
+        this.questions = [{ text: '', allowMultiple: false, options: ['', ''] }];
+        this.showResults = false;
+        this.resetInvalidQuestions();
+        this.hasSubmitted = false;
+
+        this.alreadyVoted = true;
+
+        if (this.alreadyVoted) {
+          this.infoMessage = 'Uživatel již hlasoval. Děkujeme za účast!';
+        } else {
+          this.infoMessage = 'Vaše odpovědi byly úspěšně odeslány.';
+        }
+
         this.router.navigate(['/poll-created'], { replaceUrl: true });
       },
       error: () => {

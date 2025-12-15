@@ -96,3 +96,17 @@
   margin-top: 20px;
   line-height: 1.5;
 }
+
+.toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #2b6cb0; /* modrá pro info */
+  color: #fff;
+  padding: 10px 15px;
+  border-radius: 5px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  z-index: 1000;
+  opacity: 0.95;
+}
+

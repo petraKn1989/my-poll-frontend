@@ -13,11 +13,12 @@ import { Router } from '@angular/router';
 })
 export class PollCreatedComponent implements OnInit {
   appUrl = environment.appUrl;
+  showCopyToast = false;
 
   constructor(private pollStore: PollStoreService) {}
 
   ngOnInit(): void {
-    console.log('UIID je tady:', this.pollStore.getPollUuid());
+
   }
 
   // Odkaz na vyplnění ankety
@@ -38,7 +39,10 @@ export class PollCreatedComponent implements OnInit {
     }
 
     navigator.clipboard.writeText(link)
-      .then(() => alert('Odkaz byl zkopírován do schránky!'))
+       .then(() => {
+      this.showCopyToast = true;         
+      setTimeout(() => this.showCopyToast = false, 3000); 
+    })
       .catch(err => console.error('Chyba při kopírování odkazu:', err));
   }
 }

@@ -1,3 +1,11 @@
+<!-- Toast pro administrátora -->
+<div class="toast-container" *ngIf="toastMessage">
+  <div [ngClass]="toastClass" class="toast">
+    {{ toastMessage }}
+  </div>
+</div>
+
+
 <!-- Tabulka akcí: zobrazí se jen při active nebo paused -->
 <div class="survey-options-container" *ngIf="pollStatus === 'active' || pollStatus === 'paused'">
 

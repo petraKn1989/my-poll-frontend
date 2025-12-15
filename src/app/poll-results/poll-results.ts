@@ -50,8 +50,7 @@ export class PollResults implements OnInit, OnChanges {
         this.pollData = data;
         this.isLoading = false;
         if (data.id) this.pollStore.setPollId(data.id);
-        console.log("mam id toho průzkumu" + this.pollStore.getPollId()); 
-        console.log("data ma" , data); 
+
       },
       error: (err) => {
         console.error('Chyba při načítání výsledků', err);
@@ -62,13 +61,13 @@ export class PollResults implements OnInit, OnChanges {
 
    ngOnChanges(changes: SimpleChanges) {
     if (changes['pollStatus']) {
-      console.log('Nový status z rodiče:', this.pollData.status);
+  
       // tady můžeš aktualizovat logiku tabulky
     }
   }
 
   onStatusChanged(newStatus: string) {
-  console.log('Rodič dostal nový status:', newStatus);
+
   this.pollData.status = newStatus; // aktualizujeme pollData.status
 }
 
