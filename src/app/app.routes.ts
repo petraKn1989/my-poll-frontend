@@ -10,5 +10,8 @@ export const routes: Routes = [
   { path: 'poll-created', component: PollCreatedComponent },
    { path: 'fill-poll/:slug', component: FillPollComponent }, // parametr id
    { path: 'survey-thank-you', component: SurveyThankyou },
-   { path: 'poll-results/:slug', component: PollResults }
+   { path: 'poll-results/:slug', component: PollResults },
+    { path: '**', redirectTo: '' } 
 ];
+
+

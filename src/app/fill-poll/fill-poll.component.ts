@@ -15,9 +15,8 @@ import { AnswerItem, AnswerRequest } from '../../model/Poll';
 export class FillPollComponent implements OnInit {
   @ViewChild('surveyForm') surveyForm!: NgForm;
 
-  // pollId!: number;
   pollData: any;
-  isSubmitting = false; // ⬅ proměnná pro zabránění dvojitého odeslání
+  isSubmitting = false;
   slug!: string;
   showErrorModal = false;
   errorMessageModal = '';
@@ -29,29 +28,46 @@ export class FillPollComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // this.pollId = Number(this.route.snapshot.paramMap.get('id'));
-    this.slug = this.route.snapshot.paramMap.get('slug')!;
+    // Slug vždy z URL
+    this.route.paramMap.subscribe(params => {
+      const urlSlug = params.get('slug');
+      if (!urlSlug) {
+        console.warn('Slug není definován, přesměrovávám na index.');
+        this.router.navigate(['']); // fallback
+        return;
+      }
+      this.slug = urlSlug;
+      this.loadPoll();
+    });
+  }
 
-    this.pollService.getPollbyUIID(this.slug).subscribe((data) => {
-      this.pollData = data;
+  private loadPoll() {
+    this.pollService.getPollbyUIID(this.slug).subscribe({
+      next: (data) => {
+        this.pollData = data;
 
-      // Inicializace polí pro radio a checkboxy
-      this.pollData.questions.forEach((q: any) => {
-        if (!q.allowMultiple) {
-          q.selectedOptionId = null; // pro radio
-        } else {
-          q.selectedOptions = {}; // pro checkboxy
-          q.options.forEach((opt: any) => {
-            q.selectedOptions[opt.id] = false;
-          });
-        }
-      });
+        // Inicializace polí pro radio a checkboxy
+        this.pollData.questions.forEach((q: any) => {
+          if (!q.allowMultiple) {
+            q.selectedOptionId = null; // pro radio
+          } else {
+            q.selectedOptions = {};
+            q.options.forEach((opt: any) => {
+              q.selectedOptions[opt.id] = false;
+            });
+          }
+        });
+      },
+      error: (err) => {
+        console.error('Chyba při načítání ankety:', err);
+        this.errorMessageModal = 'Nepodařilo se načíst anketu.';
+        this.showErrorModal = true;
+      },
     });
   }
 
   submitSurvey() {
-    if (this.isSubmitting) return; // prevence dvojího odeslání
-
+    if (this.isSubmitting) return;
     this.isSubmitting = true;
 
     const resultPayload: AnswerRequest = this.transformFormToResult();
@@ -60,23 +76,23 @@ export class FillPollComponent implements OnInit {
       next: (res) => {
         if (!res.allowVote) {
           this.isSubmitting = false;
-          this.errorMessageModal = 'Už jste hlasovali, další hlasování není možné.';
+          this.errorMessageModal =
+            'Už jste hlasovali, další hlasování není možné.';
           this.showErrorModal = true;
-          return; // 🔹 tady se zastaví
+          return;
         }
-
         this.router.navigate(['/survey-thank-you']);
       },
       error: (err) => {
         console.error('Chyba při ukládání', err);
         this.isSubmitting = false;
-        this.errorMessageModal = 'Odeslání se nezdařilo. Zadejte odpovědi ke všem otázkám.';
+        this.errorMessageModal =
+          'Odeslání se nezdařilo. Zadejte odpovědi ke všem otázkám.';
         this.showErrorModal = true;
       },
     });
   }
 
-  // Pomocná funkce – převede Angular form na JSON vhodný pro backend
   private transformFormToResult(): AnswerRequest {
     const result: AnswerItem[] = [];
 
@@ -104,12 +120,10 @@ export class FillPollComponent implements OnInit {
       return '0 %';
     }
     const percent = (votes / this.pollData.totalVotes) * 100;
-    return percent.toFixed(1) + ' %'; // 1 desetinné místo
+    return percent.toFixed(1) + ' %';
   }
 
   closeErrorModal() {
     this.showErrorModal = false;
   }
-
-
 }

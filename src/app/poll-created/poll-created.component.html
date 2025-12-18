@@ -16,8 +16,17 @@
     <div class="poll-link-block">
       <span class="block-title">Pro odkaz na hlasování:</span>
       <p class="link-text">Zde je odkaz na anketu:</p>
-      <a [href]="getPollLink()" target="_blank">{{ getPollLink() }}</a>
-      <button class="copy-link" (click)="copyLink(getPollLink())">Kopírovat odkaz</button>
+         <a
+        [routerLink]="['/fill-poll', pollUuid]"
+        class="poll-url"
+        *ngIf="pollUuid"
+      >
+        {{ fullFillPollLink }}
+      </a>
+
+      <button class="copy-link" (click)="copyPollLink()">
+        Kopírovat odkaz
+      </button>
     </div>
 
     <!-- Odstup -->
@@ -27,8 +36,17 @@
     <div class="poll-link-block">
       <span class="block-title">Pro odkaz na administraci / výsledky:</span>
       <p class="link-text">Zde je odkaz pro sledování výsledků a správu ankety:</p>
-      <a [href]="getResultsLink()" target="_blank">{{ getResultsLink() }}</a>
-      <button class="copy-link" (click)="copyLink(getResultsLink())">Kopírovat odkaz</button>
+      <a
+        [routerLink]="['/poll-results', pollUuid]"
+        class="poll-url"
+        *ngIf="pollUuid"
+      >
+        {{ fullResultsLink }}
+      </a>
+
+      <button class="copy-link" (click)="copyResultsLink()">
+        Kopírovat odkaz
+      </button>
   
     </div>
   </div>
