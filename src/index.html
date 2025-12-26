@@ -2,24 +2,52 @@
 <html lang="cs">
 <head>
   <meta charset="utf-8">
-  <title>Vytvořit anketu zdarma | Online dotazník a hlasování</title>
-  <base href="/">
+  <title>Anketa zdarma – rychlý online dotazník bez registrace a bez emailu</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Vytvořte si vlastní online anketu zdarma, rychlý dotazník nebo hlasování online. Sdílejte s přáteli, kolegy či studenty.">
-  <meta name="keywords" content="anketa zdarma, dotazník zdarma, hlasování online, online anketa, online dotazník, průzkum zdarma">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+  <!-- Meta SEO -->
+  <meta name="description" content="Vytvořte si rychle online anketu nebo dotazník zdarma bez registrace a bez emailu. Hlasování online pro všechny během minutky.">
+  <meta name="keywords" content="anketa zdarma, dotazník zdarma, hlasování online, rychlá anketa, online dotazník, rychle, bez registrace, bez emailu, hlasování zdarma, online anketa zdarma">
+  <meta name="robots" content="index, follow">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+  <!-- Fonts & CSS -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Structured Data JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Anketa zdarma",
+    "url": "https://www.anketa-zdarma.cz/",
+    "description": "Vytvořte si rychle online anketu nebo dotazník zdarma bez registrace a bez emailu. Rychlé hlasování online pro všechny.",
+    "keywords": ["anketa zdarma","dotazník zdarma","hlasování online","rychlá anketa","online dotazník","rychle","bez registrace","bez emailu","hlasování zdarma","online anketa zdarma"],
+    "potentialAction": {
+      "@type": "CreateAction",
+      "target": "https://www.anketa-zdarma.cz/"
+    }
+  }
+  </script>
 </head>
+
 <body>
-  <app-root>
-    <!-- Fallback text pro SEO -->
-    <div style="display:none;">
-      <h1>Vytvořit anketu zdarma</h1>
-      <h2>Online anketa a dotazník zdarma</h2>
-      <p>Vytvořte si vlastní online anketu zdarma, rychlý dotazník nebo hlasování online. Sdílejte s přáteli, kolegy či studenty.</p>
-    </div>
-  </app-root>
+  <!-- SEO text pro vyhledávače -->
+  <div style="display:none;">
+    <h1>Anketa zdarma – rychlý online dotazník bez registrace</h1>
+    <h2>Vytvořte si vlastní online dotazník zdarma bez emailu</h2>
+    <p>Rychlé hlasování online bez registrace a bez nutnosti zadat email. Sdílejte s přáteli, kolegy či studenty a sledujte výsledky okamžitě.</p>
+  </div>
+
+  <!-- Angular mount point -->
+  <app-root></app-root>
+
+  <!-- JS Angular aplikace -->
+  <script src="main.js" type="text/javascript"></script>
 </body>
 </html>

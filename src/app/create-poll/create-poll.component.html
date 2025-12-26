@@ -1,16 +1,20 @@
 <div class="container">
-  <h1>Vytvořit anketu</h1>
 
-  <section class="seo-content">
-    <h2>Online anketa a dotazník</h2>
-    <p>Vytvořte si vlastní online anketu zdarma, rychlý dotazník nebo hlasování.</p>
+  <!-- Hlavní SEO titulek (H1) -->
+  <h1>Vytvořit anketu zdarma  </h1>
+
+  <!-- SEO popis pro Google (H2 + paragraf) -->
+  <section class="seo-content visually-hidden">
+    <h2>Online anketa a dotazník zdarma</h2>
+    <p>Vytvořte si vlastní online anketu nebo dotazník zdarma, bez registrace. Sdílejte s přáteli, kolegy nebo studenty a získejte výsledky okamžitě.</p>
   </section>
 
   <!-- Povinné otázky hláška -->
-  <div class="info-note">Všechny otázky, které zadáte, budou povinné pro účastníky ankety.</div>
 
-  <!-- Formulář -->
+
+  <!-- Formulář ankety -->
   <form (ngSubmit)="createPoll()" novalidate>
+
     <!-- Název ankety -->
     <div>
       <label for="poll-title" class="name-poll">Název ankety</label>
@@ -19,7 +23,7 @@
         name="title"
         type="text"
         [(ngModel)]="title"
-        placeholder="Zadejte Název ankety"
+        placeholder="Zadejte název ankety"
         [ngClass]="{ invalid: hasSubmitted && !title?.trim() }"
         required
         aria-invalid="{{ hasSubmitted && !title?.trim() }}"
@@ -56,7 +60,7 @@
         Text otázky je povinný.
       </div>
 
-      <!-- Možnosti -->
+      <!-- Možnosti odpovědí -->
       <h3>Možnosti odpovědí</h3>
       <div class="option-row" *ngFor="let opt of q.options; let oi = index; trackBy: trackByIndex">
         <input
@@ -100,11 +104,10 @@
     <div class="show-results-container">
       <label class="show-results-checkbox">
         <input type="checkbox" [(ngModel)]="showResults" name="showResults" />
-        Zobrazit počet hlasů u jednotlivých možností
+        Ukázat počet hlasů u jednotlivých odpovědí v anketě
       </label>
       <p class="show-results-note">
-        Pokud je zaškrtnuto, lidé uvidí, kolik hlasů již bylo dáno pro každou možnost u jednotlivých
-        otázek. Pokud nezaškrtnuto, tyto informace zůstanou skryté.
+        Pokud zaškrtnete, u každé odpovědi bude účastník vidět dosavadní průběh hlasování
       </p>
     </div>
 

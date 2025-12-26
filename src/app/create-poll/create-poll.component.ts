@@ -14,7 +14,7 @@ import { SeoService } from '../services/seo.service';
   templateUrl: './create-poll.component.html',
   styleUrls: ['./create-poll.component.css'],
 })
-export class CreatePollComponent implements OnInit {
+export class CreatePollComponent  {
   title: string = '';
   questions = [{ text: '', allowMultiple: false, options: ['', ''] }];
   invalidQuestions: { text: boolean; options: boolean[] }[] = [];
@@ -23,76 +23,16 @@ export class CreatePollComponent implements OnInit {
   errorMessage: string = '';
   infoMessage: string = '';
   hasSubmitted: boolean = false;
-  alreadyVoted = false;
+
 
   constructor(
     private pollService: PollService,
     private pollStore: PollStoreService,
-    private router: Router,
-    private seo: SeoService
+    private router: Router
+ 
   ) {}
 
-  ngOnInit(): void {
-    this.seo.setPage(
-      'Vytvořit anketu zdarma | Online dotazník',
-      'Vytvořte si vlastní anketu, dotazník nebo průzkum online zdarma. Sdílejte s přáteli, kolegy nebo studenty.',
-      this.seo['keywordPool']
-    );
-    this.addJsonLdSchema();
-    this.updateSocialMeta();
-    this.resetInvalidQuestions();
-  }
 
-  private addJsonLdSchema() {
-    const script = document.createElement('script');
-    script.type = 'application/ld+json';
-    script.text = JSON.stringify({
-      '@context': 'https://schema.org',
-      '@type': 'WebPage',
-      name: 'Vytvořit anketu zdarma',
-      description:
-        'Vytvořte si vlastní online dotazník zdarma. Klíčová slova: ' +
-        this.seo['keywordPool'].join(', '),
-      url: window.location.href,
-      mainEntity: {
-        '@type': 'Survey',
-        name: 'Vytvořit anketu zdarma',
-        description:
-          'Vytvořte si vlastní online dotazník zdarma. Klíčová slova: ' +
-          this.seo['keywordPool'].join(', '),
-      },
-    });
-    document.head.appendChild(script);
-  }
-
-  private updateSocialMeta() {
-    const url = window.location.href;
-    const title = 'Vytvořit anketu zdarma | Online dotazník';
-    const description =
-      'Vytvořte si vlastní anketu nebo průzkum online zdarma. Klíčová slova: ' +
-      this.seo['keywordPool'].join(', ');
-    const image = 'https://www.example.com/assets/preview-image.png';
-
-    // Open Graph
-    this.seo['metaService'].updateTag({ property: 'og:title', content: title });
-    this.seo['metaService'].updateTag({ property: 'og:description', content: description });
-    this.seo['metaService'].updateTag({ property: 'og:type', content: 'website' });
-    this.seo['metaService'].updateTag({ property: 'og:url', content: url });
-    this.seo['metaService'].updateTag({ property: 'og:image', content: image });
-
-    // Twitter Card
-    this.seo['metaService'].updateTag({ name: 'twitter:card', content: 'summary_large_image' });
-    this.seo['metaService'].updateTag({ name: 'twitter:title', content: title });
-    this.seo['metaService'].updateTag({ name: 'twitter:description', content: description });
-    this.seo['metaService'].updateTag({ name: 'twitter:image', content: image });
-  }
-
-  private resetInvalidQuestions() {
-    this.invalidQuestions = this.questions.map((q) => ({
-      text: false,
-      options: q.options.map(() => false),
-    }));
-  }
 
   isQuestionOptionsInvalid(qIndex: number): boolean {
     const q = this.invalidQuestions[qIndex];
@@ -201,16 +141,10 @@ export class CreatePollComponent implements OnInit {
         this.title = '';
         this.questions = [{ text: '', allowMultiple: false, options: ['', ''] }];
         this.showResults = false;
-        this.resetInvalidQuestions();
+      //  this.resetInvalidQuestions();
         this.hasSubmitted = false;
 
-        this.alreadyVoted = true;
-
-        if (this.alreadyVoted) {
-          this.infoMessage = 'Uživatel již hlasoval. Děkujeme za účast!';
-        } else {
-          this.infoMessage = 'Vaše odpovědi byly úspěšně odeslány.';
-        }
+       
 
         this.router.navigate(['/poll-created'], { replaceUrl: true });
       },

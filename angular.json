@@ -58,6 +58,16 @@
     },
     "defaultConfiguration": "development"
   },
+  "prerender": {
+  "builder": "@angular-devkit/build-angular:prerender",
+  "options": {
+    "browserTarget": "anketa-app:build:production",
+    "routes": [
+      "/"  
+    ]
+  }
+},
+
   "extract-i18n": {
     "builder": "@angular/build:extract-i18n"
   },

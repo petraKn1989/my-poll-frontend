@@ -324,6 +324,87 @@ input[disabled] {
   background: #265a96;
 }
 
+/* Společné pozadí pro všechny modaly */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5); /* ztmavené pozadí */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Vlastní modal box */
+.modal {
+  background-color: #fff;
+  padding: 20px 30px;
+  border-radius: 8px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  text-align: center;
+  animation: fadeIn 0.2s ease-out;
+}
+
+/* Animace pro hezké zobrazení */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Nadpis modalu */
+.modal h3 {
+  margin-top: 0;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+/* Text modalu */
+.modal p {
+  margin: 10px 0 20px 0;
+  font-size: 16px;
+}
+
+/* Kontejner pro tlačítka */
+.modal .button-group {
+  display: flex;
+  justify-content: center;
+  gap: 10px; /* mezera mezi tlačítky */
+  flex-wrap: wrap;
+}
+
+/* Tlačítka modalu */
+.modal button {
+  padding: 8px 18px;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  min-width: 90px;
+  transition: background-color 0.2s, opacity 0.2s;
+}
+
+/* Speciální barvy pro tlačítka */
+.modal button.confirm {
+  background-color: #4CAF50; /* zelená pro Ano / potvrdit */
+  color: #fff;
+}
+
+.modal button.cancel {
+  background-color: #f44336; /* červená pro Ne / zrušit */
+  color: #fff;
+}
+
+/* Hover efekt pro tlačítka */
+.modal button:hover {
+  opacity: 0.9;
+}
+
+
 
 
 

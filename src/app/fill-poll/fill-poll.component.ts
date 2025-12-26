@@ -20,6 +20,7 @@ export class FillPollComponent implements OnInit {
   slug!: string;
   showErrorModal = false;
   errorMessageModal = '';
+  showConfirmModal = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -28,12 +29,11 @@ export class FillPollComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Slug vždy z URL
     this.route.paramMap.subscribe(params => {
       const urlSlug = params.get('slug');
       if (!urlSlug) {
         console.warn('Slug není definován, přesměrovávám na index.');
-        this.router.navigate(['']); // fallback
+        this.router.navigate(['']);
         return;
       }
       this.slug = urlSlug;
@@ -49,7 +49,7 @@ export class FillPollComponent implements OnInit {
         // Inicializace polí pro radio a checkboxy
         this.pollData.questions.forEach((q: any) => {
           if (!q.allowMultiple) {
-            q.selectedOptionId = null; // pro radio
+            q.selectedOptionId = null;
           } else {
             q.selectedOptions = {};
             q.options.forEach((opt: any) => {
@@ -68,8 +68,37 @@ export class FillPollComponent implements OnInit {
 
   submitSurvey() {
     if (this.isSubmitting) return;
-    this.isSubmitting = true;
 
+    // Zkontrolovat, zda jsou všechny otázky vyplněné
+    const unanswered = this.pollData.questions.some((q: any) => {
+      if (q.allowMultiple) {
+        return !Object.values(q.selectedOptions).some(v => v);
+      } else {
+        return q.selectedOptionId == null;
+      }
+    });
+
+    if (unanswered) {
+      // Zobrazit potvrzovací modal
+      this.showConfirmModal = true;
+      return;
+    }
+
+    // Odeslat přímo
+    this.sendSurvey();
+  }
+
+  confirmSend() {
+    this.showConfirmModal = false;
+    this.sendSurvey();
+  }
+
+  cancelSend() {
+    this.showConfirmModal = false;
+  }
+
+  private sendSurvey() {
+    this.isSubmitting = true;
     const resultPayload: AnswerRequest = this.transformFormToResult();
 
     this.pollService.sendAnswers(resultPayload).subscribe({
@@ -86,34 +115,41 @@ export class FillPollComponent implements OnInit {
       error: (err) => {
         console.error('Chyba při ukládání', err);
         this.isSubmitting = false;
-        this.errorMessageModal =
-          'Odeslání se nezdařilo. Zadejte odpovědi ke všem otázkám.';
+        this.errorMessageModal = 'Odeslání se nezdařilo.';
         this.showErrorModal = true;
       },
     });
   }
 
   private transformFormToResult(): AnswerRequest {
-    const result: AnswerItem[] = [];
+  const result: AnswerItem[] = [];
 
-    for (let q of this.pollData.questions) {
-      const selectedIds = q.allowMultiple
-        ? Object.keys(q.selectedOptions)
-            .filter((k) => q.selectedOptions[k])
-            .map((k) => Number(k))
-        : [q.selectedOptionId];
+  for (let q of this.pollData.questions) {
+    let selectedIds: number[] = [];
 
-      result.push({
-        questionId: q.id,
-        selectedOptionIds: selectedIds,
-      });
+    if (q.allowMultiple) {
+      selectedIds = Object.keys(q.selectedOptions)
+        .filter(k => q.selectedOptions[k])
+        .map(k => Number(k));
+    } else {
+      if (q.selectedOptionId != null) {
+        selectedIds = [q.selectedOptionId];
+      }
     }
 
-    return {
-      pollId: this.pollData.id,
-      answers: result,
-    };
+    // Pokud nezodpovězeno, pošleme prázdné pole []
+    result.push({
+      questionId: q.id,
+      selectedOptionIds: selectedIds,
+    });
   }
+
+  return {
+    pollId: this.pollData.id,
+    answers: result,
+  };
+}
+
 
   getPercentage(votes: number): string {
     if (!this.pollData || !this.pollData.totalVotes || this.pollData.totalVotes === 0) {
