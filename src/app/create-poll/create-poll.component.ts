@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { PollStoreService } from '../services/poll-store';
 import { PollService } from '../services/pollServices';
 import { CreatePollDto } from '../../model/Poll';
-import { SeoService } from '../services/seo.service';
+
 
 @Component({
   selector: 'app-create-poll',
