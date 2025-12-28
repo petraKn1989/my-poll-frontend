@@ -27,6 +27,10 @@
       <button class="copy-link" (click)="copyPollLink()">
         Kopírovat odkaz
       </button>
+        <!-- QR kód -->
+      <div class="qr-code" *ngIf="qrDataUrl">
+        <img [src]="qrDataUrl" alt="QR kód ankety">
+      </div>
     </div>
 
     <!-- Odstup -->

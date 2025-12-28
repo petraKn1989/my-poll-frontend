@@ -1,12 +1,14 @@
+// src/app/poll-created/poll-created.component.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { PollStoreService } from '../services/poll-store';
+import QRCode from 'qrcode';
 
 @Component({
   selector: 'app-poll-created',
   standalone: true,
-  imports: [CommonModule, RouterModule], // RouterModule pro [routerLink]
+  imports: [CommonModule, RouterModule],
   templateUrl: './poll-created.component.html',
   styleUrls: ['./poll-created.component.css'],
 })
@@ -15,6 +17,7 @@ export class PollCreatedComponent implements OnInit {
   pollUuid: string | null = null;
   fullFillPollLink: string = '';
   fullResultsLink: string = '';
+  qrDataUrl: string | null = null;
 
   constructor(public pollStore: PollStoreService) {}
 
@@ -25,6 +28,11 @@ export class PollCreatedComponent implements OnInit {
       const baseHref = document.querySelector('base')?.getAttribute('href') || '/';
       this.fullFillPollLink = `${location.origin}${baseHref}#/fill-poll/${this.pollUuid}`;
       this.fullResultsLink = `${location.origin}${baseHref}#/poll-results/${this.pollUuid}`;
+
+      // Generování QR kódu
+      QRCode.toDataURL(this.fullFillPollLink)
+        .then(url => this.qrDataUrl = url)
+        .catch(err => console.error('Chyba při generování QR kódu:', err));
     }
   }
 
@@ -42,6 +50,4 @@ export class PollCreatedComponent implements OnInit {
     this.showCopyToast = true;
     setTimeout(() => (this.showCopyToast = false), 3000);
   }
-
 }
-
