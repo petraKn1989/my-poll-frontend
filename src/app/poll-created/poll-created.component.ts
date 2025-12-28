@@ -18,6 +18,7 @@ export class PollCreatedComponent implements OnInit {
   fullFillPollLink: string = '';
   fullResultsLink: string = '';
   qrDataUrl: string | null = null;
+  qrDataUrlResult: string | null = null;
 
   constructor(public pollStore: PollStoreService) {}
 
@@ -32,6 +33,10 @@ export class PollCreatedComponent implements OnInit {
       // Generování QR kódu
       QRCode.toDataURL(this.fullFillPollLink)
         .then(url => this.qrDataUrl = url)
+        .catch(err => console.error('Chyba při generování QR kódu:', err));
+
+        QRCode.toDataURL(this.fullResultsLink)
+        .then(url => this.qrDataUrlResult = url)
         .catch(err => console.error('Chyba při generování QR kódu:', err));
     }
   }
