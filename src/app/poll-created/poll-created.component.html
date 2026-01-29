@@ -1,14 +1,9 @@
 <!-- Toast hláška -->
-<div class="toast" *ngIf="showCopyToast">
-  Odkaz byl zkopírován do schránky!
-</div>
-
+<div class="toast" *ngIf="showCopyToast">Odkaz byl zkopírován do schránky!</div>
 
 <div class="success-card">
   <h1>Anketa byla úspěšně vytvořena</h1>
-  <p class="success-text">
-    Sdílejte ji se svými respondenty a začněte sbírat odpovědi.
-  </p>
+  <p class="success-text">Sdílejte ji se svými respondenty a začněte sbírat odpovědi.</p>
 
   <!-- Oranžový rámeček s odkazy -->
   <div class="links-frame">
@@ -16,20 +11,14 @@
     <div class="poll-link-block">
       <span class="block-title">Pro odkaz na hlasování:</span>
       <p class="link-text">Zde je odkaz na anketu:</p>
-         <a
-        [routerLink]="['/fill-poll', pollUuid]"
-        class="poll-url"
-        *ngIf="pollUuid"
-      >
+      <a [routerLink]="['/fill-poll', pollUuid]" class="poll-url" *ngIf="pollUuid">
         {{ fullFillPollLink }}
       </a>
 
-      <button class="copy-link" (click)="copyPollLink()">
-        Kopírovat odkaz
-      </button>
-        <!-- QR kód -->
+      <button class="copy-link" (click)="copyPollLink()">Kopírovat odkaz</button>
+      <!-- QR kód -->
       <div class="qr-code" *ngIf="qrDataUrl">
-        <img [src]="qrDataUrl" alt="QR kód ankety">
+        <img [src]="qrDataUrl" alt="QR kód ankety" />
       </div>
     </div>
 
@@ -40,30 +29,98 @@
     <div class="poll-link-block">
       <span class="block-title">Pro odkaz na administraci / výsledky:</span>
       <p class="link-text">Zde je odkaz pro sledování výsledků a správu ankety:</p>
-      <a
-        [routerLink]="['/poll-results', pollUuid]"
-        class="poll-url"
-        *ngIf="pollUuid"
-      >
+      <a [routerLink]="['/poll-results', pollUuid]" class="poll-url" *ngIf="pollUuid">
         {{ fullResultsLink }}
       </a>
 
-      <button class="copy-link" (click)="copyResultsLink()">
-        Kopírovat odkaz
-      </button>
-       <div class="qr-code" *ngIf="qrDataUrlResult">
-        <img [src]="qrDataUrlResult" alt="QR kód ankety">
+      <button class="copy-link" (click)="copyResultsLink()">Kopírovat odkaz</button>
+      <div class="qr-code" *ngIf="qrDataUrlResult">
+        <img [src]="qrDataUrlResult" alt="QR kód ankety" />
       </div>
-  
     </div>
   </div>
+  <!-- Pole pro zadání e-mailu -->
+  <div class="email-form" style="margin-top: 32px" >
+    <div style="border-top: 1px solid #e4e7ec; padding-top: 24px" *ngIf="!emailSent" >
+      <div>
+        <label style="display: flex; align-items: center; margin-bottom: 8px; font-size: 16px">
+          <input type="checkbox" [(ngModel)]="sendFillLink" style="margin-right: 8px; width: 1.5rem;
+    height: 1.5rem;
+    cursor: pointer;" />
+          Zaslat odkaz na vyplnění ankety
+        </label>
+        <div style="font-size: 14px; color: #667085; margin-bottom: 12px">
+        <i> Odkaz a QR kód pro vyplnění ankety budou odeslány na zadanou e-mailovou adresu. </i> 
+        </div>
+
+        <label style="display: flex; align-items: center; margin-bottom: 8px; font-size: 16px">
+          <input type="checkbox" [(ngModel)]="sendResultsLink" style="margin-right: 8px; width: 1.5rem;
+    height: 1.5rem;
+    cursor: pointer;" />
+          Zaslat odkaz na výsledky a správu ankety
+        </label>
+        <div style="font-size: 14px; color: #667085; margin-bottom: 12px">
+        <i> Odkaz a QR kód pro správu a sledování výsledků ankety budou odeslány na zadanou e-mailovou
+          adresu. </i> 
+        </div>
+      </div>
+
+      <label style="margin-right: 16px;"><b>Zadejte váš e-mail:</b></label>
+
+      <input
+        
+        id="recipientEmail"
+        type="email"
+        [(ngModel)]="recipientEmail"
+        placeholder="např. vase.jmeno@email.cz"
+        [disabled]="isSendingEmail"
+        style="
+          padding: 10px 12px;
+          width: 100%;
+          max-width: 360px;
+          font-size: 15px;
+          border-radius: 6px;
+          border: 1px solid #d0d5dd;
+          outline: none;
+        "
+      />
+
+      <!-- TLAČÍTKO -->
+      <div style="margin-top: 12px">
+        <button
+          *ngIf="!emailSent"
+          (click)="sendEmail()"
+          [disabled]="isSendingEmail"
+          style="
+            background-color: #175cd3;
+            color: #ffffff;
+            padding: 10px 18px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+          "
+        >
+          {{ isSendingEmail ? 'Odesílám…' : 'Odeslat na e-mail' }}
+        </button>
+      </div>
+
+      <!-- STAVY -->
+     
+    </div>
+  </div>
+   <div *ngIf="emailSent" style="margin-top: 12px; font-size: 18px; color: #027a48">
+      <b>  E-mail byl úspěšně odeslán.  </b>
+      </div>
+
+      <div *ngIf="emailError" style="margin-top: 12px; font-size: 14px; color: #b42318">
+        E-mail se nepodařilo odeslat. Zkontrolujte adresu a zkuste to znovu.
+      </div>
 
   <!-- Oranžový text dole -->
-  <p class="warming-info">
-   
-    Nezapomeňte si uložit odkazy, protože zatím nefunguje automatické zasílání emailem!
-  </p>
-  <br>
-  <p>   Děkujeme, že jste vytvořili anketu.</p>
 
+  <br />
+  <hr>
+  <p style="color: orange;">Děkujeme, že jste vytvořili anketu.</p>
 </div>
