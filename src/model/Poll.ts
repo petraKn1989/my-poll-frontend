@@ -28,6 +28,7 @@ export interface Poll {
 export interface AnswerRequest {
   pollId: number;           // ID ankety
   answers: AnswerItem[];    // pole odpovědí
+  note?: string;
 }
 
 export interface AnswerItem {
@@ -46,5 +47,16 @@ export interface CreatePollDto {
   showResults: boolean,
   title: string 
   questions: CreateQuestionDto[];
+}
+
+export interface AnswerDetail {
+  questionText: string;
+  optionText: string;
+}
+
+export interface Submission {
+  submissionId: string;
+  note?: string;
+  answers: AnswerDetail[];
 }
 

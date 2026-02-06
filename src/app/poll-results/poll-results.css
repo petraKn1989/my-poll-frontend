@@ -101,6 +101,30 @@
   background-color: #d9363e;
 }
 
+.detail-btn {
+  display: inline-block;
+  margin: 20px auto;            /* prostor nad a pod */
+  padding: 12px 28px;           /* pohodlný padding */
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+  background-color: #0077cc;    /* modrá ladící s nadpisem */
+  border: none;
+  border-radius: 8px;           /* kulaté rohy */
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;        /* pokud je <a> */
+  box-shadow: 0 4px 12px rgba(0, 119, 204, 0.3);
+  transition: all 0.3s ease;
+}
+
+.detail-btn:hover {
+  background-color: #005fa3;    /* tmavší modrá při hoveru */
+  box-shadow: 0 6px 16px rgba(0, 95, 163, 0.4);
+  transform: translateY(-2px);  /* jemný efekt “zvednutí” */
+}
+
+
 /* Responzivita */
 @media (max-width: 480px) {
   .results-container {

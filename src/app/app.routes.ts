@@ -4,6 +4,7 @@ import { PollCreatedComponent } from './poll-created/poll-created.component';
 import { FillPollComponent } from './fill-poll/fill-poll.component';
 import { SurveyThankyou } from './survey-thankyou/survey-thankyou';
 import { PollResults } from './poll-results/poll-results';
+import { ResultDetail } from './result-detail/result-detail';
 
 export const routes: Routes = [
   { path: '', component: CreatePollComponent },
@@ -11,6 +12,7 @@ export const routes: Routes = [
    { path: 'fill-poll/:slug', component: FillPollComponent }, // parametr id
    { path: 'survey-thank-you', component: SurveyThankyou },
    { path: 'poll-results/:slug', component: PollResults },
+   { path: 'poll-results-detail', component: ResultDetail },
     { path: '**', redirectTo: '' } 
 ];
 

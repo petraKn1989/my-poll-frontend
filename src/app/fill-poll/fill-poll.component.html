@@ -21,9 +21,6 @@
   </div>
 </div>
 
-
-
-
 <!-- Deleted -->
 
 <div *ngIf="pollData?.status === 'deleted'" class="status-message deleted">
@@ -140,6 +137,22 @@
           </div>
         </div>
       </div>
+     
+
+     <div class="note-block">
+  <label for="submissionNote"><b>Chcete něco dodat? (jméno, poznámka…)</b></label>
+  <input
+    type="text"
+    id="submissionNote"
+    [(ngModel)]="submissionNote"
+    name="submissionNote"
+ 
+    [disabled]="pollData.status !== 'active'"
+  />
+</div>
+
+ 
+
 
       <div class="total-votes" *ngIf="pollData.showResults && pollData.totalVotes !== undefined">
         Celkem odesláno hlasování: {{ pollData.totalVotes }}
@@ -159,3 +172,10 @@
     <p>Načítám dotazník…</p>
   </ng-template>
 </div>
+<footer style="background-color: #fcd488; color: blue; padding: 20px; text-align: center; font-family: Arial, sans-serif;">
+  
+  <div style="margin-bottom: 10px;">
+   &copy; 2026 Petra K  -   <a href="https://www.anketa-zdarma.cz" style="color: blue; text-decoration: none;">www.anketa-zdarma.cz</a>
+  </div>
+ 
+</footer>

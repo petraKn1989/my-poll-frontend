@@ -1,7 +1,7 @@
 
 import { Component, OnChanges, OnInit, SimpleChanges, Output, EventEmitter
   } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { PollService } from '../services/pollServices';
 import { Poll } from '../../model/Poll';
@@ -36,7 +36,8 @@ export class PollResults implements OnInit, OnChanges {
   constructor(
     private route: ActivatedRoute,
     private pollService: PollService,
-    private pollStore: PollStoreService
+    private pollStore: PollStoreService, 
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -46,7 +47,9 @@ export class PollResults implements OnInit, OnChanges {
 
     // Používáme existující getPoll, protože tam už jsou votes
     this.pollService.getPollbyUIID(this.slug).subscribe({
+      
       next: (data) => {
+ 
         this.pollData = data;
         this.isLoading = false;
         if (data.id) this.pollStore.setPollId(data.id);
@@ -69,6 +72,10 @@ export class PollResults implements OnInit, OnChanges {
   onStatusChanged(newStatus: string) {
 
   this.pollData.status = newStatus; // aktualizujeme pollData.status
+}
+
+goToDetail() {
+  this.router.navigate(['/poll-results-detail']);
 }
 
   getPercentage(optionVotes: number): string {

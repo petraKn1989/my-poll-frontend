@@ -1,0 +1,39 @@
+<div class="results-table-container" *ngIf="submissions.length > 0">
+ 
+  <a class="back" href="javascript:history.back()">Zpět</a>
+  <h1>Detail výsledků hlasování</h1>
+  <table class="results-table">
+    <thead>
+      <tr>
+        <th>Otázka</th>
+        <th>Odpověď</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let submission of submissions; let i = index">
+        <!-- Submission header -->
+        <tr class="submission-header">
+          <td colspan="2">
+            <span class="voter-name">Hlas: {{ i + 1 }} </span>
+          </td>
+        </tr>
+
+        <!-- Odpovědi -->
+        <tr *ngFor="let ans of groupAnswers(submission.answers); let qIndex = index" class="answer-row">
+          <td>{{ qIndex + 1 }}. {{ ans.questionText }}</td>
+          <td>{{ ans.options.join(', ') }}</td>
+        </tr>
+
+        <!-- Poznámka -->
+        <tr class="note-row" *ngIf="submission.note">
+          <td colspan="2">Poznámka: <b>{{ submission.note }} </b></td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</div>
+
+<div *ngIf="submissions.length === 0" class="info-text">
+  Žádné odpovědi nejsou k dispozici.
+</div>
+

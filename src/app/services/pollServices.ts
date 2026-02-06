@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { AnswerRequest, CreatePollDto, Poll } from '../../model/Poll'; 
+import { AnswerRequest, CreatePollDto, Poll, Submission } from '../../model/Poll'; 
 import { environment } from '../../environments/environment'; 
 
 @Injectable({
@@ -34,6 +34,11 @@ deletePoll(id: number) {
 updateStatus(pollId: number, status: string): Observable<{status: string}> {
   return this.http.patch<{status: string}>(`${this.baseUrl}/poll/${pollId}/status`, { status });
 }
+
+
+ getPollResultsDetail(pollId: number): Observable<Submission[]> {
+    return this.http.get<Submission[]>(`${this.baseUrl}/api/submissions/${pollId}`);
+  }
 
 
 

@@ -21,6 +21,7 @@ export class FillPollComponent implements OnInit {
   showErrorModal = false;
   errorMessageModal = '';
   showConfirmModal = false;
+  submissionNote: string | null = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -101,8 +102,10 @@ export class FillPollComponent implements OnInit {
     this.isSubmitting = true;
     const resultPayload: AnswerRequest = this.transformFormToResult();
 
+
     this.pollService.sendAnswers(resultPayload).subscribe({
       next: (res) => {
+        
         if (!res.allowVote) {
           this.isSubmitting = false;
           this.errorMessageModal =
@@ -110,6 +113,7 @@ export class FillPollComponent implements OnInit {
           this.showErrorModal = true;
           return;
         }
+          
         this.router.navigate(['/survey-thank-you']);
       },
       error: (err) => {
@@ -147,6 +151,7 @@ export class FillPollComponent implements OnInit {
   return {
     pollId: this.pollData.id,
     answers: result,
+    note: this.submissionNote ?? undefined
   };
 }
 

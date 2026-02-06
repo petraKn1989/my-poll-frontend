@@ -3,6 +3,10 @@
   <h1>Výsledky ankety</h1>
 
 
+
+
+
+
   <div *ngFor="let q of pollData.questions; let i = index" class="question-block">
     <p class="question-text">{{ i + 1 }}. {{ q.text }}</p>
 
@@ -14,6 +18,10 @@
    
   </div>
    <p style="font-size: 20px; color: darkgreen"><b>Hlasovalo celkem: {{ pollData.totalVotes }}</b> </p>
+
+   <button *ngIf="pollData.totalVotes! > 0" class="detail-btn" (click)="goToDetail()">
+  Detail výsledků
+</button>
   
 
   <div class="poll-actions">

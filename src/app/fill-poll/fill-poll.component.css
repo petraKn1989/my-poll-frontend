@@ -404,6 +404,41 @@ input[disabled] {
   opacity: 0.9;
 }
 
+.note-block {
+  margin-top: 40px;
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+}
+
+.note-block label {
+  font-size: 16px;
+  color: #2c2c2c;
+}
+
+.note-block input[type="text"] {
+  padding: 8px 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;    /* jemný šedý rámeček */
+  border-radius: 6px;         /* mírně kulaté rohy */
+
+  background-color: #fff;      /* bílé pozadí */
+}
+
+
+
+.note-block input[type="text"]:focus {
+  border-color: #999;  /* jemný šedý rámeček */
+  box-shadow: none;    /* žádný stín */
+  outline: none; 
+}
+
+
+
+
+
 
 
 
