@@ -58,5 +58,6 @@ export interface Submission {
   submissionId: string;
   note?: string;
   answers: AnswerDetail[];
+  createdAt: string;
 }
 

@@ -15,6 +15,7 @@
         <tr class="submission-header">
           <td colspan="2">
             <span class="voter-name">Hlas: {{ i + 1 }} </span>
+            <span class="voter-date">{{ submission.createdAt | date:'dd.MM.yyyy HH:mm' }}</span>
           </td>
         </tr>
 

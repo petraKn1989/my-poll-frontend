@@ -28,7 +28,7 @@ export class ResultDetail implements OnInit {
     
     
     this.pollService.getPollResultsDetail(id).subscribe(data => {
-      console.log("tady get to id tady je submission:  " , data);
+     
     this.submissions = data;
   });
 

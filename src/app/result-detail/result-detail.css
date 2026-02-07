@@ -63,3 +63,12 @@
   font-weight: 500;
   padding: 15px;
 }
+
+.voter-date {
+  float: right;
+  color: #888888;       /* světle šedá */
+  font-weight: normal;   /* ne tučné */
+  font-size: 0.875rem;   /* menší než základní text */
+  margin-left: 0.5rem;   /* odsazení od předchozího textu */
+  white-space: nowrap;   /* aby datum zůstalo na jednom řádku */
+}
