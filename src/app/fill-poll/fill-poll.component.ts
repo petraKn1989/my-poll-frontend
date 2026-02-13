@@ -109,7 +109,7 @@ export class FillPollComponent implements OnInit {
         if (!res.allowVote) {
           this.isSubmitting = false;
           this.errorMessageModal =
-            'Už jste hlasovali, další hlasování není možné.';
+            'Z této IP adresy již byl hlas odeslán, opakované hlasování není povoleno.';
           this.showErrorModal = true;
           return;
         }
