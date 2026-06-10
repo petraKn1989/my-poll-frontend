@@ -29,6 +29,7 @@ export interface AnswerRequest {
   pollId: number;           // ID ankety
   answers: AnswerItem[];    // pole odpovědí
   note?: string;
+  deviceUuid: string;
 }
 
 export interface AnswerItem {

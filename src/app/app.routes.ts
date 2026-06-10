@@ -8,11 +8,11 @@ import { ResultDetail } from './result-detail/result-detail';
 
 export const routes: Routes = [
   { path: '', component: CreatePollComponent },
-  { path: 'poll-created', component: PollCreatedComponent },
+  { path: 'poll-created/:slug', component: PollCreatedComponent },
    { path: 'fill-poll/:slug', component: FillPollComponent }, // parametr id
    { path: 'survey-thank-you', component: SurveyThankyou },
    { path: 'poll-results/:slug', component: PollResults },
-   { path: 'poll-results-detail', component: ResultDetail },
+   { path: 'poll-results-detail/:id', component: ResultDetail },
     { path: '**', redirectTo: '' } 
 ];
 

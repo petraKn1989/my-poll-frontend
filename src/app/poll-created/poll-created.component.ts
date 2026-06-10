@@ -1,7 +1,7 @@
 // src/app/poll-created/poll-created.component.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { PollStoreService } from '../services/poll-store';
 import QRCode from 'qrcode';
 import emailjs from '@emailjs/browser';
@@ -35,10 +35,13 @@ sendResultsLink: boolean = false; // defaultně nezaškrtnuto
   showToastEmail = false;
   toastMessage = '';
 
-  constructor(public pollStore: PollStoreService) {}
+  constructor(public pollStore: PollStoreService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
-    this.pollUuid = this.pollStore.getPollUuid();
+    this.pollUuid = this.route.snapshot.paramMap.get('slug');
+   
 
     if (this.pollUuid) {
       const baseHref = document.querySelector('base')?.getAttribute('href') || '/';

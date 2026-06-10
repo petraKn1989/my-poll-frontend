@@ -23,6 +23,7 @@ export class FillPollComponent implements OnInit {
   showConfirmModal = false;
   submissionNote: string | null = null;
 
+
   constructor(
     private route: ActivatedRoute,
     private pollService: PollService,
@@ -67,6 +68,15 @@ export class FillPollComponent implements OnInit {
     });
   }
 
+  private getOrCreateDeviceUuid(): string {
+  let uuid = localStorage.getItem('poll_device_uuid');
+  if (!uuid) {
+    uuid = crypto.randomUUID(); // Vygeneruje bezpečné náhodné UUID
+    localStorage.setItem('poll_device_uuid', uuid);
+  }
+  return uuid;
+}
+
   submitSurvey() {
     if (this.isSubmitting) return;
 
@@ -105,11 +115,11 @@ export class FillPollComponent implements OnInit {
 
     this.pollService.sendAnswers(resultPayload).subscribe({
       next: (res) => {
-        
+      // 2. UPRAVENO: Odkomentovaná kontrola z backendu
         if (!res.allowVote) {
           this.isSubmitting = false;
           this.errorMessageModal =
-            'Z této IP adresy již byl hlas odeslán, opakované hlasování není povoleno.';
+            'Z tohoto zařízení již byl hlas odeslán, opakované hlasování není povoleno.';
           this.showErrorModal = true;
           return;
         }
@@ -151,7 +161,8 @@ export class FillPollComponent implements OnInit {
   return {
     pollId: this.pollData.id,
     answers: result,
-    note: this.submissionNote ?? undefined
+    note: this.submissionNote ?? undefined,
+    deviceUuid: this.getOrCreateDeviceUuid()
   };
 }
 

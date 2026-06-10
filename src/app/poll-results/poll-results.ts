@@ -75,7 +75,7 @@ export class PollResults implements OnInit, OnChanges {
 }
 
 goToDetail() {
-  this.router.navigate(['/poll-results-detail']);
+  this.router.navigate(['/poll-results-detail', this.pollData?.id]);
 }
 
   getPercentage(optionVotes: number): string {

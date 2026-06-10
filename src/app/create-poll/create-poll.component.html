@@ -84,7 +84,7 @@
       <!-- Povolení více odpovědí -->
       <label class="multi-answer">
         <input type="checkbox" [(ngModel)]="q.allowMultiple" [name]="'multi-' + qi" />
-        Povolit více odpovědí
+        Povolit více odpovědí (Hlasující může zaškrtnout více možností)
       </label>
     </div>
 
@@ -97,10 +97,10 @@
     <div class="show-results-container">
       <label class="show-results-checkbox">
         <input type="checkbox" [(ngModel)]="showResults" name="showResults" />
-        Ukázat počet hlasů u jednotlivých odpovědí v anketě
+      Zobrazit hlasujícím průběžné výsledky u jednotlivých odpovědí 
       </label>
       <p class="show-results-note">
-        Pokud zaškrtnete, u každé odpovědi bude účastník vidět dosavadní průběh hlasování
+        Účastníci uvidí, kolik hlasů která možnost dostala. Jinak průběh hlasování schováte a uvidíte ho jen vy.
       </p>
     </div>
 

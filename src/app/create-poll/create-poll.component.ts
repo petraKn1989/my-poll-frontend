@@ -135,7 +135,7 @@ export class CreatePollComponent  {
         this.isSubmitting = false;
         this.infoMessage = '';
         if (resp.id) this.pollStore.setPollId(resp.id);
-        if (resp.slug) this.pollStore.setPollUuid(resp.slug);
+    
 
         // Reset formuláře po úspěšném odeslání
         this.title = '';
@@ -146,7 +146,7 @@ export class CreatePollComponent  {
 
        
 
-        this.router.navigate(['/poll-created'], { replaceUrl: true });
+        this.router.navigate( ['/poll-created', resp.slug], { replaceUrl: true });
       },
       error: () => {
         this.isSubmitting = false;

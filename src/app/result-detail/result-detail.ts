@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Submission } from '../../model/Poll';
 import { PollService } from '../services/pollServices';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { PollStoreService } from '../services/poll-store';
 
@@ -18,11 +18,13 @@ export class ResultDetail implements OnInit {
 
   submissions: Submission[] = [];
 
-  constructor(private pollService: PollService, private pollStoreService: PollStoreService) { }
+  constructor(private pollService: PollService, private pollStoreService: PollStoreService,
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
 
-    const id = this.pollStoreService.getPollId();
+    const id = Number(this.route.snapshot.paramMap.get('id'));
 
     if (id) {
     
