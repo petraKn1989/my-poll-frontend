@@ -22,7 +22,6 @@
 </div>
 
 <!-- Deleted -->
-
 <div *ngIf="pollData?.status === 'deleted'" class="status-message deleted">
   <div class="container">
     <h2>Dotazník byl smazán</h2>
@@ -111,8 +110,8 @@
               />
               {{ opt.text }}
             </label>
-            <!-- Hlasy a procenta, pokud showResults je true -->
-            <span class="option-votes" *ngIf="pollData.showResults">
+            <!-- OPRAVENO ZDE: Pridan test na finished_hidden -->
+            <span class="option-votes" *ngIf="pollData.showResults && pollData.status !== 'finished_hidden'">
               {{ opt.votes ?? 0 }} hlasů ({{ getPercentage(opt.votes ?? 0) }})
             </span>
           </div>
@@ -130,26 +129,24 @@
               />
               {{ opt.text }}
             </label>
-            <!-- Hlasy a procenta, pokud showResults je true -->
-            <span class="option-votes" *ngIf="pollData.showResults">
+            <!-- ZDE JSTE TO MĚL SPRÁVNĚ -->
+            <span class="option-votes" *ngIf="pollData.showResults && pollData.status !== 'finished_hidden'">
               {{ opt.votes ?? 0 }} hlasů ({{ getPercentage(opt.votes ?? 0) }})
             </span>
           </div>
         </div>
       </div>
-     
 
-     <div class="note-block">
-  <label for="submissionNote"><b>Chcete něco dodat? (jméno, poznámka…)</b></label>
-  <input
-    type="text"
-    id="submissionNote"
-    [(ngModel)]="submissionNote"
-    name="submissionNote"
- 
-    [disabled]="pollData.status !== 'active'"
-  />
-</div>
+      <div class="note-block">
+        <label for="submissionNote"><b>Chcete něco dodat? (jméno, poznámka…)</b></label>
+        <input
+          type="text"
+          id="submissionNote"
+          [(ngModel)]="submissionNote"
+          name="submissionNote"
+          [disabled]="pollData.status !== 'active'"
+        />
+      </div>
 
  
 
@@ -173,9 +170,7 @@
   </ng-template>
 </div>
 <footer style="background-color: #fcd488; color: blue; padding: 20px; text-align: center; font-family: Arial, sans-serif;">
-  
   <div style="margin-bottom: 10px;">
-   &copy; 2026 Petra K  -   <a href="https://www.anketa-zdarma.cz" style="color: blue; text-decoration: none;">www.anketa-zdarma.cz</a>
+    &copy; 2026 Petra K - <a href="https://www.anketa-zdarma.cz" style="color: blue; text-decoration: none;">www.anketa-zdarma.cz</a>
   </div>
- 
 </footer>
